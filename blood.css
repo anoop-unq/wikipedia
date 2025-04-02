@@ -1,0 +1,284 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: poppins,sans-serif;
+}
+.sr-only{
+    margin-left: 11px;
+}
+
+
+.color-less{
+    background-color: rgb(255, 255, 255);
+    width: 100%;
+    /* margin: auto; */
+    box-shadow: 5px 1px 11px 2px lch(87.21% 7.34 19.86 / 0.936);
+    padding: 1px 11px;
+    padding-top: 15px;
+    margin-top: 25px;
+}
+.search-class{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    margin-top: 50px;
+}
+.search-input-class{
+    padding: 9px 5px;
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    border-radius: 5px;
+    outline: none;
+    border: 1px solid #cdcdcd;
+    font-size: 18px;
+    text-indent: 7px;
+}
+
+.spinner{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 35vh;
+}
+.display-items{
+    margin-top: 15px;
+}
+.search-input-class::placeholder{
+    box-sizing: border-box;
+    font-size: 18px;
+    text-indent: 7px;
+    letter-spacing: 1.25px;
+    color: black;
+}
+.title{
+    color: rgb(0, 0, 0);
+    text-decoration: none;
+    display: block;
+    margin-bottom: 5px;
+     /* without block element the margin doesn't work so add display block */ 
+}
+.title:hover{
+    color: hsl(234, 100%, 50%);
+    text-decoration: underline;
+}
+.link{
+    color: blue;
+    text-decoration: none;
+    display: block;
+    margin-bottom: 3px;
+}
+.link:active{
+    color: green;
+}
+.link:hover{
+    color: hsl(120, 79%, 32%);
+    text-decoration: underline;
+    text-decoration-color: hsl(235, 100%, 50%);
+}
+.description{
+    color: black;
+    margin-top: 5px;
+}
+
+.imageE1{
+    position: absolute;
+    top:0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0.5px 10px 1px rgb(206, 204, 204);
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    overflow: hidden;
+}
+
+.popupE1{
+    background-color: #ede9e9;
+    /* font-size: 18px; */
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+    font-weight: 475;
+    border: none;
+    outline: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+}
+/* 
+https://i.pinimg.com/736x/05/96/37/059637f75abb751c137868b3af5f8976.jpg
+https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset-cartoon-man-retro-illustration-vector.jpg
+ */
+.paraE1{
+    margin-top: 18px;
+    font-family: poppins;
+    font-weight: 479;
+    font-size: 16px;
+    font-weight: 555;
+    color: hsl(0, 100%, 50%);
+}
+.para{
+    margin-top: 18px;
+    font-family: poppins;
+    font-weight: 479;
+    font-size: 16px;
+    font-weight: 555;
+    color: hsl(0, 0%, 8%);
+}
+.imageE11{
+    position: absolute;
+    top:0;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background-color: #ffffff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-shadow: 0px 0.5px 10px 1px rgb(206, 204, 204);
+    border: none;
+    outline: none;
+    border-radius: 50%;
+    overflow: hidden;
+}
+.image-insideE1{
+    width: 55px;
+    height: 55px;
+    object-fit: cover;
+}
+#pop-up-messageE1{
+    border: none;
+    outline: none;
+    background-color: hwb(120 11% 42%);
+    font-weight: 459;
+    padding: 5px 11px; 
+    border-radius: 3px;
+    font-size: 15px;
+    letter-spacing: 0.95px;
+    border-radius: 7px;
+    color: rgb(231, 224, 224);
+    text-align: center;
+}
+#pop-up-messageE1:hover{
+    background-color: hsl(120, 54%, 35%);
+    color: #ffffff;
+}
+
+#pop-up-message{
+    border: none;
+    outline: none;
+    background-color: hwb(251 20% 12%);
+    font-weight: 459;
+    padding: 5px 11px; 
+    border-radius: 3px;
+    font-size: 15px;
+    letter-spacing: 0.95px;
+    border-radius: 7px;
+    color: rgb(231, 224, 224);
+    text-align: center;
+}
+#pop-up-message:hover{
+    background-color: hsl(237, 100%, 50%);
+    color: #ffffff;
+}
+
+
+@media (min-width:600px) {
+    .color-less{
+        background-color: rgb(255, 255, 255);
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        box-shadow: none;
+        /* box-shadow: 5px 1px 11px 2px lch(87.21% 7.34 19.86 / 0.936); */
+        padding: 0px 7px;
+        padding-top: 15px;
+        margin-top: 0px;
+        border-radius: 5px;
+    }
+    .search-class{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        text-align: center;
+        margin-top: 50px;
+    }
+    .search-input-class{
+        padding: 12px 5px;
+        width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+        border-radius: 5px;
+        outline: none;
+        border: 1px solid #cdcdcd;
+        font-size: 25px;
+        text-indent: 7px;
+    }
+    .spinner{
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 225px;
+    }
+    .display-items{
+        margin-top: 15px;
+    }
+    .search-input-class::placeholder{
+        box-sizing: border-box;
+        font-size: 21px;
+        text-indent: 7px;
+        letter-spacing: 1.25px;
+        color: black;
+    }
+    .custom-spinner {
+        width: 3rem !important;  /* Adjust size */
+        height: 3rem !important;
+        border-width: 0.25rem !important; /* Adjust thickness */
+    }
+    .sr-only{
+        margin-left: 11px;
+        margin-top: 5px;
+        font-size: 25px;
+    }
+    .title{
+        color: rgb(0, 0, 0);
+        text-decoration: none;
+        display: block;
+        margin-bottom: 5px;
+        font-size: 25px;
+         /* without block element the margin doesn't work so add display block */ 
+    }
+    .title:hover{
+        color: hsl(234, 100%, 50%);
+        text-decoration: underline;
+    }
+    .link{
+        color: blue;
+        text-decoration: none;
+        display: block;
+        font-size: 21px;
+        margin-bottom: 3px;
+    }
+    .link:active{
+        color: green;
+    }
+    .link:hover{
+        color: hsl(120, 79%, 32%);
+        text-decoration: underline;
+        text-decoration-color: hsl(235, 100%, 50%);
+    }
+    .description{
+        font-size: 18px;
+        color: black;
+        margin-top: 5px;
+    }
+}
