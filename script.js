@@ -921,187 +921,52 @@ fetch(url, options)
           searchImage(true);
         }
         
-        // else if(id === 'thirdMan') {
-        //   resultsContainer.classList.add("one")
-        //   resultsContainer.classList.remove("myImage")
-        //   resultsContainer.classList.add("myVideo")
-        //   resultsContainer.classList.remove("myNews")
-        //   imageSectionE1.style.display="block"
-        //   imageSectionE2.style.display="none"
-        //   imageSection.style.display="none"
+        else if(id === 'thirdMan') {
+          resultsContainer.classList.add("one")
+          resultsContainer.classList.remove("myImage")
+          resultsContainer.classList.add("myVideo")
+          resultsContainer.classList.remove("myNews")
+          imageSectionE1.style.display="block"
+          imageSectionE2.style.display="none"
+          imageSection.style.display="none"
 
-        //   resultsContainer.textContent = "";
-
-        //   const apiKey = "AIzaSyAt9y1dynzJ4Gs_HzQB4UZUPIigzVZFNek";
-        //   let nextPageToken = '';
-        //   let currentQuery = '';
-      
-        //   function startSearch() {
-        //     // const query = document.getElementById("searchInput").value.trim();
-        //     userValue = searchInput.value;
-        //     const query = userValue;
-
-        //     // if (!query) return alert("Please enter a search term");
-        //     if(userValue===""){
-        //       showPopup("Start typing and hit Enter to search Wikipedia.")
-        //       resultsContainer.textContent=""
-        //       // spinnerE1.classList.toggle("d-none")
-        //       spinnerE1.classList.add("d-none");
-        //     }
-        //     else{
-        //     currentQuery = query;
-        //     nextPageToken = ''; // reset token
-        //     // document.getElementById("result").innerHTML = "Loading...";
-        //     searchVideo(query, true);
-        //     // if (isNewSearch) {
-        //     //   page = 1; // Reset page on new search
-        //     //   resultsContainer.innerHTML = ""; // Clear only on new search
-        //     //   if (showMore) {
-        //     //     showMore.remove();
-        //     //     showMore = null;
-        //     //   }
-        //     // }
-        //   }
-      
-        //   function loadMore() {
-        //     searchVideo(currentQuery, false);
-        //   }
-      
-        //   function searchVideo(query, isNewSearch = false) {
-        //     const url = new URL('https://www.googleapis.com/youtube/v3/search');
-        //     url.searchParams.set('part', 'snippet');
-        //     url.searchParams.set('type', 'video');
-        //     url.searchParams.set('maxResults', '10');
-        //     url.searchParams.set('q', query);
-        //     url.searchParams.set('key', apiKey);
-        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
-      
-        //     fetch(url.toString())
-        //       .then(res => res.json())
-        //       .then(data => {
-        //         const results = data.items;
-        //         nextPageToken = data.nextPageToken || '';
-        //         // const showMoreBtn = document.getElementById("showMoreBtn");
-        //         if (isNewSearch) {
-        //           page = 1; // Reset page on new search
-        //           resultsContainer.innerHTML = ""; // Clear only on new search
-        //           if (showMore) {
-        //             showMore.remove();
-        //             showMore = null;
-        //           }
-        //         }
-        //         if (results.length) {
-        //           let html = '';
-        //           results.forEach(video => {
-        //             const videoId = video.id.videoId;
-        //             const title = video.snippet.title;
-        //             const description = video.snippet.description;
-        //             const url = `https://www.youtube.com/watch?v=${videoId}`;
-      
-        //             html += `
-        //               <div class="video-card">
-                      
-        //                 <div class ="frame">
-        //                 <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more"></iframe>
-                       
-        //                 <a href="${url}" target="_blank" class="titleE1">${title}</a>
-        //                 </div>
-        //                <hr />
-        //                 <p class = "para11">${description}</p>
-        //               </div>
-        //             `;
-        //         //     let twoDivContainer = document.createElement('div')
-        //         // twoDivContainer.classList.add("two-container")
-
-        //         // let imgBox = document.createElement('div');
-        //         // imgBox.classList.add("sectionA")
-        //         // let img = document.createElement('img');
-        //         // img.classList.add("image-photo")
-        //         // img.src = result.urls.small;
-        //         // // img.href="links.self"
-        //         // img.addEventListener("click", () => {
-        //         //   const wikiSearch = encodeURIComponent(searchKeyword);
-        //         //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
-        //         //   window.open(wikiUrl, '_blank'); // open in new tab
-        //         // });
-        //         // imgBox.appendChild(img);
-        //         // twoDivContainer.append(imgBox)
-        //         // resultsContainer.appendChild(twoDivContainer);
-        //           });
-      
-        //           if (isNewSearch) {
-        //             resultsContainer.innerHTML = html;
-        //           } else {
-        //            resultsContainer.insertAdjacentHTML('beforeend', html);
-        //           }
-        //           if (!showMore) {
-        //             let assumeShow = document.createElement('div')
-        //             assumeShow.classList.add("assume-show")
-                    
-        //             showMore = document.createElement('button');
-        //             showMore.textContent = "View More";
-        //             showMore.classList.add("showE1");
-        //             showMore.style.display = "block";
-        //             assumeShow.append(showMore)
-        //             imageSectionE1.append(assumeShow)
-        //             // console.log(imageSection)
-        //             document.body.appendChild(imageSectionE1);
-            
-        //               showMore.addEventListener("click", () => {
-        //               page++;
-        //               loadMore() // Load next page
-        //             });
-        //           }
-      
-        //           // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
-        //         } else {
-        //           resultsContainer.innerHTML = "No results found.";
-        //           showMore.style.display = 'none';
-        //         }
-        //       })
-        //       .catch(err => {
-        //         console.error("Error:", err);
-        //         resultsContainer.innerHTML = "Error fetching video.";
-        //       });
-        //   }
-        // }
-        // startSearch()
-
-        // }
-        else if (id === 'thirdMan') {
-          resultsContainer.classList.add("one");
-          resultsContainer.classList.remove("myImage", "myNews");
-          resultsContainer.classList.add("myVideo");
-        
-          imageSectionE1.style.display = "block";
-          imageSectionE2.style.display = "none";
-          imageSection.style.display = "none";
-        
           resultsContainer.textContent = "";
-        
+
           const apiKey = "AIzaSyAt9y1dynzJ4Gs_HzQB4UZUPIigzVZFNek";
           let nextPageToken = '';
           let currentQuery = '';
-        
+      
           function startSearch() {
+            // const query = document.getElementById("searchInput").value.trim();
             userValue = searchInput.value;
             const query = userValue;
-        
-            if (userValue === "") {
-              showPopup("Start typing and hit Enter to search videos!");
-              resultsContainer.textContent = "";
-              return;
+
+            // if (!query) return alert("Please enter a search term");
+            if(userValue===""){
+              showPopup("Start typing and hit Enter to search Wikipedia.")
+              resultsContainer.textContent=""
+              // spinnerE1.classList.toggle("d-none")
+              spinnerE1.classList.add("d-none");
             }
-        
+            else{
             currentQuery = query;
-            nextPageToken = '';
-            searchVideo(query, true); // Start new search
+            nextPageToken = ''; // reset token
+            // document.getElementById("result").innerHTML = "Loading...";
+            searchVideo(query, true);
+            // if (isNewSearch) {
+            //   page = 1; // Reset page on new search
+            //   resultsContainer.innerHTML = ""; // Clear only on new search
+            //   if (showMore) {
+            //     showMore.remove();
+            //     showMore = null;
+            //   }
+            // }
           }
-        
+      
           function loadMore() {
-            searchVideo(currentQuery, false); // Load next page
+            searchVideo(currentQuery, false);
           }
-        
+      
           function searchVideo(query, isNewSearch = false) {
             const url = new URL('https://www.googleapis.com/youtube/v3/search');
             url.searchParams.set('part', 'snippet');
@@ -1110,83 +975,218 @@ fetch(url, options)
             url.searchParams.set('q', query);
             url.searchParams.set('key', apiKey);
             if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
-        
-            spinnerE1.classList.remove("d-none"); 
-        
+            //  spinnerE1.classList.remove("d-none");
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
                 const results = data.items;
                 nextPageToken = data.nextPageToken || '';
-        
+                // const showMoreBtn = document.getElementById("showMoreBtn");
                 if (isNewSearch) {
-                  resultsContainer.innerHTML = "";
+                  page = 1; // Reset page on new search
+                  resultsContainer.innerHTML = ""; // Clear only on new search
                   if (showMore) {
                     showMore.remove();
                     showMore = null;
                   }
                 }
-        
                 if (results.length) {
                   let html = '';
                   results.forEach(video => {
                     const videoId = video.id.videoId;
                     const title = video.snippet.title;
                     const description = video.snippet.description;
-                    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
-        
+                    const url = `https://www.youtube.com/watch?v=${videoId}`;
+      
                     html += `
                       <div class="video-card">
-                        <div class="frame">
-                          <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height="100px" class="more"></iframe>
-                          <a href="${videoUrl}" target="_blank" class="titleE1">${title}</a>
+                      
+                        <div class ="frame">
+                        <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more"></iframe>
+                       
+                        <a href="${url}" target="_blank" class="titleE1">${title}</a>
                         </div>
-                        <hr />
-                        <p class="para11">${description}</p>
+                       <hr />
+                        <p class = "para11">${description}</p>
                       </div>
                     `;
+                //     let twoDivContainer = document.createElement('div')
+                // twoDivContainer.classList.add("two-container")
+
+                // let imgBox = document.createElement('div');
+                // imgBox.classList.add("sectionA")
+                // let img = document.createElement('img');
+                // img.classList.add("image-photo")
+                // img.src = result.urls.small;
+                // // img.href="links.self"
+                // img.addEventListener("click", () => {
+                //   const wikiSearch = encodeURIComponent(searchKeyword);
+                //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
+                //   window.open(wikiUrl, '_blank'); // open in new tab
+                // });
+                // imgBox.appendChild(img);
+                // twoDivContainer.append(imgBox)
+                // resultsContainer.appendChild(twoDivContainer);
                   });
-        
+      
                   if (isNewSearch) {
                     resultsContainer.innerHTML = html;
                   } else {
-                    resultsContainer.insertAdjacentHTML('beforeend', html);
+                   resultsContainer.insertAdjacentHTML('beforeend', html);
                   }
-        
                   if (!showMore) {
-                    let assumeShow = document.createElement('div');
-                    assumeShow.classList.add("assume-show");
-        
+                    let assumeShow = document.createElement('div')
+                    assumeShow.classList.add("assume-show")
+                    
                     showMore = document.createElement('button');
                     showMore.textContent = "View More";
                     showMore.classList.add("showE1");
-                    assumeShow.append(showMore);
-        
-                    imageSectionE1.append(assumeShow);
+                    showMore.style.display = "block";
+                    assumeShow.append(showMore)
+                    imageSectionE1.append(assumeShow)
+                    // console.log(imageSection)
                     document.body.appendChild(imageSectionE1);
-        
-                    showMore.addEventListener("click", () => {
+            
+                      showMore.addEventListener("click", () => {
                       page++;
-                      loadMore();
+                      loadMore() // Load next page
                     });
                   }
+      
+                  // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
                 } else {
-                  showPopup("No Result found on videos try to enter again !");
-                  resultsContainer.textContent = "";
-                  if (showMore) showMore.style.display = 'none';
+                  resultsContainer.innerHTML = "No results found.";
+                  showMore.style.display = 'none';
                 }
               })
               .catch(err => {
                 console.error("Error:", err);
                 resultsContainer.innerHTML = "Error fetching video.";
-              })
-              .finally(() => {
-                spinnerE1.classList.add("d-none"); 
               });
           }
-        
-          startSearch();
         }
+        startSearch()
+
+        }
+        // else if (id === 'thirdMan') {
+        //   resultsContainer.classList.add("one");
+        //   resultsContainer.classList.remove("myImage", "myNews");
+        //   resultsContainer.classList.add("myVideo");
+        
+        //   imageSectionE1.style.display = "block";
+        //   imageSectionE2.style.display = "none";
+        //   imageSection.style.display = "none";
+        
+        //   resultsContainer.textContent = "";
+        
+        //   const apiKey = "AIzaSyAt9y1dynzJ4Gs_HzQB4UZUPIigzVZFNek";
+        //   let nextPageToken = '';
+        //   let currentQuery = '';
+        
+        //   function startSearch() {
+        //     userValue = searchInput.value;
+        //     const query = userValue;
+        
+        //     if (userValue === "") {
+        //       showPopup("Start typing and hit Enter to search videos!");
+        //       resultsContainer.textContent = "";
+        //       return;
+        //     }
+        
+        //     currentQuery = query;
+        //     nextPageToken = '';
+        //     searchVideo(query, true); // Start new search
+        //   }
+        
+        //   function loadMore() {
+        //     searchVideo(currentQuery, false); // Load next page
+        //   }
+        
+        //   function searchVideo(query, isNewSearch = false) {
+        //     const url = new URL('https://www.googleapis.com/youtube/v3/search');
+        //     url.searchParams.set('part', 'snippet');
+        //     url.searchParams.set('type', 'video');
+        //     url.searchParams.set('maxResults', '10');
+        //     url.searchParams.set('q', query);
+        //     url.searchParams.set('key', apiKey);
+        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+        
+        //     spinnerE1.classList.remove("d-none"); 
+        
+        //     fetch(url.toString())
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         const results = data.items;
+        //         nextPageToken = data.nextPageToken || '';
+        
+        //         if (isNewSearch) {
+        //           resultsContainer.innerHTML = "";
+        //           if (showMore) {
+        //             showMore.remove();
+        //             showMore = null;
+        //           }
+        //         }
+        
+        //         if (results.length) {
+        //           let html = '';
+        //           results.forEach(video => {
+        //             const videoId = video.id.videoId;
+        //             const title = video.snippet.title;
+        //             const description = video.snippet.description;
+        //             const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        
+        //             html += `
+        //               <div class="video-card">
+        //                 <div class="frame">
+        //                   <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height="100px" class="more"></iframe>
+        //                   <a href="${videoUrl}" target="_blank" class="titleE1">${title}</a>
+        //                 </div>
+        //                 <hr />
+        //                 <p class="para11">${description}</p>
+        //               </div>
+        //             `;
+        //           });
+        
+        //           if (isNewSearch) {
+        //             resultsContainer.innerHTML = html;
+        //           } else {
+        //             resultsContainer.insertAdjacentHTML('beforeend', html);
+        //           }
+        
+        //           if (!showMore) {
+        //             let assumeShow = document.createElement('div');
+        //             assumeShow.classList.add("assume-show");
+        
+        //             showMore = document.createElement('button');
+        //             showMore.textContent = "View More";
+        //             showMore.classList.add("showE1");
+        //             assumeShow.append(showMore);
+        
+        //             imageSectionE1.append(assumeShow);
+        //             document.body.appendChild(imageSectionE1);
+        
+        //             showMore.addEventListener("click", () => {
+        //               page++;
+        //               loadMore();
+        //             });
+        //           }
+        //         } else {
+        //           showPopup("No Result found on videos try to enter again !");
+        //           resultsContainer.textContent = "";
+        //           if (showMore) showMore.style.display = 'none';
+        //         }
+        //       })
+        //       .catch(err => {
+        //         console.error("Error:", err);
+        //         resultsContainer.innerHTML = "Error fetching video.";
+        //       })
+        //       .finally(() => {
+        //         spinnerE1.classList.add("d-none"); 
+        //       });
+        //   }
+        
+        //   startSearch();
+        // }
         
         // else if(id === 'fourMan') {
         //   resultsContainer.classList.add("one")
