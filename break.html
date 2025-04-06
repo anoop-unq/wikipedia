@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Wikipedia Iframe Search</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f0f0;
+      margin: 0;
+      padding: 30px;
+      display: flex;
+      justify-content: center;
+    }
+
+    .container {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+      padding: 20px;
+      max-width: 900px;
+      width: 100%;
+    }
+
+    h1 {
+      text-align: center;
+    }
+
+    input {
+      width: 100%;
+      padding: 12px;
+      font-size: 16px;
+      margin-bottom: 15px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    .buttons {
+      text-align: center;
+      margin-bottom: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 15px;
+      margin: 5px;
+      font-size: 14px;
+      border: none;
+      border-radius: 6px;
+      background-color: #007BFF;
+      color: white;
+      cursor: pointer;
+    }
+
+    .buttons button:hover {
+      background-color: #0056b3;
+    }
+
+    iframe {
+      width: 100%;
+      height: 500px;
+      border: 1px solid #ccc;
+      border-radius: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Wikipedia Iframe Search</h1>
+    <input type="text" id="searchInput" placeholder="Enter your search term..." />
+    <div class="buttons">
+      <button onclick="loadIframe('all')">All</button>
+      <button onclick="loadIframe('images')">Images</button>
+      <button onclick="loadIframe('videos')">Videos</button>
+      <button onclick="loadIframe('news')">News</button>
+    </div>
+    <iframe id="displayFrame" src=""></iframe>
+  </div>
+
+  <script>
+    function loadIframe(type) {
+      const query = document.getElementById('searchInput').value.trim();
+      const iframe = document.getElementById('displayFrame');
+
+      if (!query) {
+        alert("Please enter a search term.");
+        return;
+      }
+
+      let url = '';
+
+      switch (type) {
+        case 'all':
+          url = `https://en.wikipedia.org/wiki/${encodeURIComponent(query)}`;
+          break;
+        case 'images':
+          url = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(query)}&go=Go&ns6=1`; // Images namespace
+          break;
+        case 'videos':
+          url = `https://www.youtube.com/results?search_query=${encodeURIComponent(query)}`;
+          break;
+        case 'news':
+          url = `https://en.wikipedia.org/wiki/Special:Search?search=${encodeURIComponent(query)}+news&go=Go`;
+          break;
+      }
+
+      iframe.src = url;
+    }
+  </script>
+</body>
+</html>
