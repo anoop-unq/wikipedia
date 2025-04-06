@@ -592,9 +592,11 @@ fetch(url, options)
           resultsContainer.classList.remove("myNews")
           imageSectionE1.style.display="none"
           imageSectionE2.style.display="none"
+          imageSection.style.display="none"
+
           // spinnerE1.classList.toggle("d-none")
           spinnerE1.classList.remove("d-none");
-            // spinnerE1.style.display="block"
+            spinnerE1.style.display="block"
 
   
           console.log("click")
@@ -637,7 +639,7 @@ fetch(url, options)
         
               resultsContainer.textContent="";
               if(!search_results || search_results.length ===0) {
-                
+                spinnerE1.classList.add("d-none");
                 // resultsContainer.textContent = "No results found. Please try a different search term.";
                 showPopupE1("No results found. Please try a different search term.")
                 return;
@@ -705,219 +707,401 @@ fetch(url, options)
             .catch(error => {
               console.error("Fetch error:", error);
               resultsContainer.textContent = "Failed to fetch results. Please try again later.";
+              spinnerE1.classList.add("d-none");
           })
          
         
           }
         } 
+        
         // else if (id === 'twoMan') {
-          
-        //   spinnerE1.style.display="none"
-        //   let page = 1;
-        //   // resultsContainer.innerHTML=""
-        //   async function searchImage() {
-
-        //     console.log("click")
+        //   resultsContainer.classList.remove("one")
+        //   resultsContainer.classList.add("myImage")
+        //   resultsContainer.classList.remove("myVideo")
+        //   resultsContainer.classList.remove("myNews")
+        //   imageSectionE1.style.display="none"
+        //   imageSectionE2.style.display="none"
+        //   spinnerE1.style.display = "none";
+        //   imageSection.style.display="block"
+        //   // let page = 1;
+        //   // let showMore = null;
+        
+        //   async function searchImage(isNewSearch = false) {
         //     userValue = searchInput.value;
-        //     if(userValue===""){
-        //       showPopup("Start typing and hit Enter to search Wikipedia.")
-        //       resultsContainer.textContent=""
-        //       spinnerE1.classList.toggle("d-none")
+        //     if (userValue === "") {
+        //       showPopup("Start typing and hit enter to search for images !");
+        //       resultsContainer.textContent = "";
+        //       spinnerE1.style.display = "none";
+        //       return;
         //     }
-        //     else{
-        //       // spinnerE1.classList.remove("d-none")
-        //       spinnerE1.style.display="d-none"
-        //       resultsContainer.innerHTML=""
-        //     let userMan = document.getElementById('searchMan').value;
-        //     console.log(userMan)
-        //     let url = `https://api.unsplash.com/search/photos?page=${page}&query=${userMan}&client_id=${accessKey}`
-        //     console.log(url)
-      
-        //     let response = await fetch(url)
-        //     let data = await response.json()
-      
-        //     let results = data.results
-      
-        //     results.map((result)=>{
-        //       // resultsContainer.innerHTML=""
-        //       let assam = document.createElement('div')
-        //       let mainaaam = document.createElement('img')
-        //       mainaaam.src=result.urls.small;
-        //       assam.append(mainaaam)
-        //       resultsContainer.append(assam)
-      
-        //     })
-        //     page++;
-        //     let showMore = document.createElement('button')
-
-        //     if(page>1){
-        //       showMore.classList.add("show")
-        //       showMore.textContent="sdbfjdfsjfskjbfd"
-        //       document.body.append(showMore)
-
-        //       showMore.style.display="block"
+        
+        //     if (isNewSearch) {
+        //       page = 1; // Reset page on new search
+        //       resultsContainer.innerHTML = ""; // Clear only on new search
+        //       if (showMore) {
+        //         showMore.remove();
+        //         showMore = null;
+        //       }
         //     }
-        //     showMore.addEventListener("click",()=>{
-        //       searchImage()
-        //     })
-        //     // spinnerE1.classList.toggle("d-none")
+        
+        //     spinnerE1.style.display = "block";
+        
+        //     let userManE1 = document.getElementById('searchMan');
+        //     let userMan = userManE1.value
+        //     let url = `https://api.unsplash.com/search/photos?page=${page}&query=${userMan}&client_id=${accessKey}`;
+        
+        //     try {
+        //       let response = await fetch(url);
+        //       let data = await response.json();
+        //       let results = data.results;
+        //       console.log(results)
+        //       if (results.length === 0 && page === 1) {
+        //         // resultsContainer.innerHTML = "<p>No images found.</p>";
+        //         showPopup("No images found please try a different search item.");
+        //         resultsContainer.textContent = "";
+        //         spinnerE1.style.display = "none";
+        //         userManE1.value=""
+        //         return;
+        //       }
+        
+        //       results.forEach(result => {
+        //         const searchKeyword = result.alt_description || "India monument";
+                
+        //         // if (!result.urls || !result.urls.small || !result.urls.regular) {
+        //         //   console.warn("Skipping result with missing URLs", result);
+        //         //   return;
+        //         // }
+        //         let twoDivContainer = document.createElement('div')
+        //         twoDivContainer.classList.add("two-container")
+
+        //         let imgBox = document.createElement('div');
+        //         imgBox.classList.add("sectionA")
+        //         let img = document.createElement('img');
+        //         img.classList.add("image-photo")
+        //         img.src = result.urls.small;
+        //         // img.href="links.self"
+        //         img.addEventListener("click", () => {
+        //           const wikiSearch = encodeURIComponent(searchKeyword);
+        //           const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
+        //           window.open(wikiUrl, '_blank'); // open in new tab
+        //         });
+        //         imgBox.appendChild(img);
+        //         twoDivContainer.append(imgBox)
+        //         resultsContainer.appendChild(twoDivContainer);
+        //       });
+        
+        //       // Show "Show More" button only once
+        //       if (!showMore) {
+        //         let assumeShow = document.createElement('div')
+        //         assumeShow.classList.add("assume-show")
+                
+        //         showMore = document.createElement('button');
+        //         showMore.textContent = "View More";
+        //         showMore.classList.add("showE1");
+        //         showMore.style.display = "block";
+        //         assumeShow.append(showMore)
+        //         imageSection.append(assumeShow)
+        //         console.log(imageSection)
+        //         document.body.appendChild(imageSection);
+        
+        //           showMore.addEventListener("click", () => {
+        //           page++;
+        //           searchImage(false); // Load next page
+        //         });
+        //       }
+        
+        //     } catch (error) {
+        //       console.error("Error fetching images:", error);
+        //       showPopup("Failed to load images. Try again later.");
+        //     } 
+        //     finally {
+        //       spinnerE1.style.display = "none";
+        //     }
         //   }
-        // }
-        //   searchImage()
+        
+        //   // Start first search
+        //   searchImage(true);
         // }
         else if (id === 'twoMan') {
-          resultsContainer.classList.remove("one")
-          resultsContainer.classList.add("myImage")
-          resultsContainer.classList.remove("myVideo")
-          resultsContainer.classList.remove("myNews")
-          imageSectionE1.style.display="none"
-          spinnerE1.style.display = "none";
-          imageSection.style.display="block"
-          // let page = 1;
-          // let showMore = null;
+          resultsContainer.classList.remove("one");
+          resultsContainer.classList.add("myImage");
+          resultsContainer.classList.remove("myVideo", "myNews");
+        
+          imageSectionE1.style.display = "none";
+          imageSectionE2.style.display = "none";
+          imageSection.style.display = "block";
         
           async function searchImage(isNewSearch = false) {
             userValue = searchInput.value;
+        
             if (userValue === "") {
-              showPopup("Start typing and hit enter to search for images !");
+              showPopup("Start typing and hit enter to search for images!");
               resultsContainer.textContent = "";
-              spinnerE1.style.display = "none";
               return;
             }
         
             if (isNewSearch) {
-              page = 1; // Reset page on new search
-              resultsContainer.innerHTML = ""; // Clear only on new search
+              page = 1;
+              resultsContainer.innerHTML = "";
               if (showMore) {
                 showMore.remove();
                 showMore = null;
               }
             }
         
-            spinnerE1.style.display = "block";
+            spinnerE1.classList.remove("d-none");
         
-            let userManE1 = document.getElementById('searchMan');
-            let userMan = userManE1.value
-            let url = `https://api.unsplash.com/search/photos?page=${page}&query=${userMan}&client_id=${accessKey}`;
+            const userMan = document.getElementById('searchMan').value;
+            const url = `https://api.unsplash.com/search/photos?page=${page}&query=${userMan}&client_id=${accessKey}`;
         
             try {
-              let response = await fetch(url);
-              let data = await response.json();
-              let results = data.results;
-              console.log(results)
+              const response = await fetch(url);
+              const data = await response.json();
+              const results = data.results;
+              console.log(results);
+        
               if (results.length === 0 && page === 1) {
-                // resultsContainer.innerHTML = "<p>No images found.</p>";
-                showPopup("No images found please try a different search item.");
+                showPopup("No images found. Please try a different search item.");
                 resultsContainer.textContent = "";
-                spinnerE1.style.display = "none";
-                userManE1.value=""
+                document.getElementById('searchMan').value = "";
                 return;
               }
         
               results.forEach(result => {
                 const searchKeyword = result.alt_description || "India monument";
-                
-                // if (!result.urls || !result.urls.small || !result.urls.regular) {
-                //   console.warn("Skipping result with missing URLs", result);
-                //   return;
-                // }
-                let twoDivContainer = document.createElement('div')
-                twoDivContainer.classList.add("two-container")
-
-                let imgBox = document.createElement('div');
-                imgBox.classList.add("sectionA")
-                let img = document.createElement('img');
-                img.classList.add("image-photo")
+        
+                const twoDivContainer = document.createElement('div');
+                twoDivContainer.classList.add("two-container");
+        
+                const imgBox = document.createElement('div');
+                imgBox.classList.add("sectionA");
+        
+                const img = document.createElement('img');
+                img.classList.add("image-photo");
                 img.src = result.urls.small;
-                // img.href="links.self"
+        
                 img.addEventListener("click", () => {
                   const wikiSearch = encodeURIComponent(searchKeyword);
                   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
-                  window.open(wikiUrl, '_blank'); // open in new tab
+                  window.open(wikiUrl, '_blank');
                 });
+        
                 imgBox.appendChild(img);
-                twoDivContainer.append(imgBox)
+                twoDivContainer.append(imgBox);
                 resultsContainer.appendChild(twoDivContainer);
               });
         
-              // Show "Show More" button only once
               if (!showMore) {
-                let assumeShow = document.createElement('div')
-                assumeShow.classList.add("assume-show")
-                
+                const assumeShow = document.createElement('div');
+                assumeShow.classList.add("assume-show");
+        
                 showMore = document.createElement('button');
                 showMore.textContent = "View More";
                 showMore.classList.add("showE1");
                 showMore.style.display = "block";
-                assumeShow.append(showMore)
-                imageSection.append(assumeShow)
-                console.log(imageSection)
+        
+                assumeShow.append(showMore);
+                imageSection.append(assumeShow);
                 document.body.appendChild(imageSection);
         
-                  showMore.addEventListener("click", () => {
+                showMore.addEventListener("click", () => {
                   page++;
-                  searchImage(false); // Load next page
+                  searchImage(false);
                 });
               }
         
             } catch (error) {
               console.error("Error fetching images:", error);
               showPopup("Failed to load images. Try again later.");
-            } 
-            finally {
-              spinnerE1.style.display = "none";
+            } finally {
+              spinnerE1.classList.add("d-none");
             }
           }
         
-          // Start first search
           searchImage(true);
         }
-        else if(id === 'thirdMan') {
-          resultsContainer.classList.add("one")
-          resultsContainer.classList.remove("myImage")
-          resultsContainer.classList.add("myVideo")
-          resultsContainer.classList.remove("myNews")
-          imageSectionE1.style.display="block"
-          imageSectionE2.style.display="none"
-          imageSection.style.display="none"
+        
+        // else if(id === 'thirdMan') {
+        //   resultsContainer.classList.add("one")
+        //   resultsContainer.classList.remove("myImage")
+        //   resultsContainer.classList.add("myVideo")
+        //   resultsContainer.classList.remove("myNews")
+        //   imageSectionE1.style.display="block"
+        //   imageSectionE2.style.display="none"
+        //   imageSection.style.display="none"
 
+        //   resultsContainer.textContent = "";
+
+        //   const apiKey = "AIzaSyAt9y1dynzJ4Gs_HzQB4UZUPIigzVZFNek";
+        //   let nextPageToken = '';
+        //   let currentQuery = '';
+      
+        //   function startSearch() {
+        //     // const query = document.getElementById("searchInput").value.trim();
+        //     userValue = searchInput.value;
+        //     const query = userValue;
+
+        //     // if (!query) return alert("Please enter a search term");
+        //     if(userValue===""){
+        //       showPopup("Start typing and hit Enter to search Wikipedia.")
+        //       resultsContainer.textContent=""
+        //       // spinnerE1.classList.toggle("d-none")
+        //       spinnerE1.classList.add("d-none");
+        //     }
+        //     else{
+        //     currentQuery = query;
+        //     nextPageToken = ''; // reset token
+        //     // document.getElementById("result").innerHTML = "Loading...";
+        //     searchVideo(query, true);
+        //     // if (isNewSearch) {
+        //     //   page = 1; // Reset page on new search
+        //     //   resultsContainer.innerHTML = ""; // Clear only on new search
+        //     //   if (showMore) {
+        //     //     showMore.remove();
+        //     //     showMore = null;
+        //     //   }
+        //     // }
+        //   }
+      
+        //   function loadMore() {
+        //     searchVideo(currentQuery, false);
+        //   }
+      
+        //   function searchVideo(query, isNewSearch = false) {
+        //     const url = new URL('https://www.googleapis.com/youtube/v3/search');
+        //     url.searchParams.set('part', 'snippet');
+        //     url.searchParams.set('type', 'video');
+        //     url.searchParams.set('maxResults', '10');
+        //     url.searchParams.set('q', query);
+        //     url.searchParams.set('key', apiKey);
+        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+      
+        //     fetch(url.toString())
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         const results = data.items;
+        //         nextPageToken = data.nextPageToken || '';
+        //         // const showMoreBtn = document.getElementById("showMoreBtn");
+        //         if (isNewSearch) {
+        //           page = 1; // Reset page on new search
+        //           resultsContainer.innerHTML = ""; // Clear only on new search
+        //           if (showMore) {
+        //             showMore.remove();
+        //             showMore = null;
+        //           }
+        //         }
+        //         if (results.length) {
+        //           let html = '';
+        //           results.forEach(video => {
+        //             const videoId = video.id.videoId;
+        //             const title = video.snippet.title;
+        //             const description = video.snippet.description;
+        //             const url = `https://www.youtube.com/watch?v=${videoId}`;
+      
+        //             html += `
+        //               <div class="video-card">
+                      
+        //                 <div class ="frame">
+        //                 <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more"></iframe>
+                       
+        //                 <a href="${url}" target="_blank" class="titleE1">${title}</a>
+        //                 </div>
+        //                <hr />
+        //                 <p class = "para11">${description}</p>
+        //               </div>
+        //             `;
+        //         //     let twoDivContainer = document.createElement('div')
+        //         // twoDivContainer.classList.add("two-container")
+
+        //         // let imgBox = document.createElement('div');
+        //         // imgBox.classList.add("sectionA")
+        //         // let img = document.createElement('img');
+        //         // img.classList.add("image-photo")
+        //         // img.src = result.urls.small;
+        //         // // img.href="links.self"
+        //         // img.addEventListener("click", () => {
+        //         //   const wikiSearch = encodeURIComponent(searchKeyword);
+        //         //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
+        //         //   window.open(wikiUrl, '_blank'); // open in new tab
+        //         // });
+        //         // imgBox.appendChild(img);
+        //         // twoDivContainer.append(imgBox)
+        //         // resultsContainer.appendChild(twoDivContainer);
+        //           });
+      
+        //           if (isNewSearch) {
+        //             resultsContainer.innerHTML = html;
+        //           } else {
+        //            resultsContainer.insertAdjacentHTML('beforeend', html);
+        //           }
+        //           if (!showMore) {
+        //             let assumeShow = document.createElement('div')
+        //             assumeShow.classList.add("assume-show")
+                    
+        //             showMore = document.createElement('button');
+        //             showMore.textContent = "View More";
+        //             showMore.classList.add("showE1");
+        //             showMore.style.display = "block";
+        //             assumeShow.append(showMore)
+        //             imageSectionE1.append(assumeShow)
+        //             // console.log(imageSection)
+        //             document.body.appendChild(imageSectionE1);
+            
+        //               showMore.addEventListener("click", () => {
+        //               page++;
+        //               loadMore() // Load next page
+        //             });
+        //           }
+      
+        //           // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
+        //         } else {
+        //           resultsContainer.innerHTML = "No results found.";
+        //           showMore.style.display = 'none';
+        //         }
+        //       })
+        //       .catch(err => {
+        //         console.error("Error:", err);
+        //         resultsContainer.innerHTML = "Error fetching video.";
+        //       });
+        //   }
+        // }
+        // startSearch()
+
+        // }
+        else if (id === 'thirdMan') {
+          resultsContainer.classList.add("one");
+          resultsContainer.classList.remove("myImage", "myNews");
+          resultsContainer.classList.add("myVideo");
+        
+          imageSectionE1.style.display = "block";
+          imageSectionE2.style.display = "none";
+          imageSection.style.display = "none";
+        
           resultsContainer.textContent = "";
-
+        
           const apiKey = "AIzaSyAt9y1dynzJ4Gs_HzQB4UZUPIigzVZFNek";
           let nextPageToken = '';
           let currentQuery = '';
-      
+        
           function startSearch() {
-            // const query = document.getElementById("searchInput").value.trim();
             userValue = searchInput.value;
             const query = userValue;
-
-            // if (!query) return alert("Please enter a search term");
-            if(userValue===""){
-              showPopup("Start typing and hit Enter to search Wikipedia.")
-              resultsContainer.textContent=""
-              // spinnerE1.classList.toggle("d-none")
-              spinnerE1.classList.add("d-none");
+        
+            if (userValue === "") {
+              showPopup("Start typing and hit Enter to search videos!");
+              resultsContainer.textContent = "";
+              return;
             }
-            else{
+        
             currentQuery = query;
-            nextPageToken = ''; // reset token
-            // document.getElementById("result").innerHTML = "Loading...";
-            searchVideo(query, true);
-            // if (isNewSearch) {
-            //   page = 1; // Reset page on new search
-            //   resultsContainer.innerHTML = ""; // Clear only on new search
-            //   if (showMore) {
-            //     showMore.remove();
-            //     showMore = null;
-            //   }
-            // }
+            nextPageToken = '';
+            searchVideo(query, true); // Start new search
           }
-      
+        
           function loadMore() {
-            searchVideo(currentQuery, false);
+            searchVideo(currentQuery, false); // Load next page
           }
-      
+        
           function searchVideo(query, isNewSearch = false) {
             const url = new URL('https://www.googleapis.com/youtube/v3/search');
             url.searchParams.set('part', 'snippet');
@@ -926,163 +1110,285 @@ fetch(url, options)
             url.searchParams.set('q', query);
             url.searchParams.set('key', apiKey);
             if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
-      
+        
+            spinnerE1.classList.remove("d-none"); 
+        
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
                 const results = data.items;
                 nextPageToken = data.nextPageToken || '';
-                // const showMoreBtn = document.getElementById("showMoreBtn");
+        
                 if (isNewSearch) {
-                  page = 1; // Reset page on new search
-                  resultsContainer.innerHTML = ""; // Clear only on new search
+                  resultsContainer.innerHTML = "";
                   if (showMore) {
                     showMore.remove();
                     showMore = null;
                   }
                 }
+        
                 if (results.length) {
                   let html = '';
                   results.forEach(video => {
                     const videoId = video.id.videoId;
                     const title = video.snippet.title;
                     const description = video.snippet.description;
-                    const url = `https://www.youtube.com/watch?v=${videoId}`;
-      
+                    const videoUrl = `https://www.youtube.com/watch?v=${videoId}`;
+        
                     html += `
                       <div class="video-card">
-                      
-                        <div class ="frame">
-                        <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more"></iframe>
-                       
-                        <a href="${url}" target="_blank" class="titleE1">${title}</a>
+                        <div class="frame">
+                          <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height="100px" class="more"></iframe>
+                          <a href="${videoUrl}" target="_blank" class="titleE1">${title}</a>
                         </div>
-                       <hr />
-                        <p class = "para11">${description}</p>
+                        <hr />
+                        <p class="para11">${description}</p>
                       </div>
                     `;
-                //     let twoDivContainer = document.createElement('div')
-                // twoDivContainer.classList.add("two-container")
-
-                // let imgBox = document.createElement('div');
-                // imgBox.classList.add("sectionA")
-                // let img = document.createElement('img');
-                // img.classList.add("image-photo")
-                // img.src = result.urls.small;
-                // // img.href="links.self"
-                // img.addEventListener("click", () => {
-                //   const wikiSearch = encodeURIComponent(searchKeyword);
-                //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
-                //   window.open(wikiUrl, '_blank'); // open in new tab
-                // });
-                // imgBox.appendChild(img);
-                // twoDivContainer.append(imgBox)
-                // resultsContainer.appendChild(twoDivContainer);
                   });
-      
+        
                   if (isNewSearch) {
                     resultsContainer.innerHTML = html;
                   } else {
-                   resultsContainer.insertAdjacentHTML('beforeend', html);
+                    resultsContainer.insertAdjacentHTML('beforeend', html);
                   }
+        
                   if (!showMore) {
-                    let assumeShow = document.createElement('div')
-                    assumeShow.classList.add("assume-show")
-                    
+                    let assumeShow = document.createElement('div');
+                    assumeShow.classList.add("assume-show");
+        
                     showMore = document.createElement('button');
                     showMore.textContent = "View More";
                     showMore.classList.add("showE1");
-                    showMore.style.display = "block";
-                    assumeShow.append(showMore)
-                    imageSectionE1.append(assumeShow)
-                    // console.log(imageSection)
+                    assumeShow.append(showMore);
+        
+                    imageSectionE1.append(assumeShow);
                     document.body.appendChild(imageSectionE1);
-            
-                      showMore.addEventListener("click", () => {
+        
+                    showMore.addEventListener("click", () => {
                       page++;
-                      loadMore() // Load next page
+                      loadMore();
                     });
                   }
-      
-                  // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
                 } else {
-                  resultsContainer.innerHTML = "No results found.";
-                  showMore.style.display = 'none';
+                  showPopup("No Result found on videos try to enter again !");
+                  resultsContainer.textContent = "";
+                  if (showMore) showMore.style.display = 'none';
                 }
               })
               .catch(err => {
                 console.error("Error:", err);
                 resultsContainer.innerHTML = "Error fetching video.";
+              })
+              .finally(() => {
+                spinnerE1.classList.add("d-none"); 
               });
           }
+        
+          startSearch();
         }
-        startSearch()
+        
+        // else if(id === 'fourMan') {
+        //   resultsContainer.classList.add("one")
+        //   resultsContainer.classList.remove("myImage")
+        //   resultsContainer.classList.remove("myVideo")
+        //   resultsContainer.classList.add("myNews")
+        //   imageSectionE2.style.display="block"
+        //   imageSectionE1.style.display="none"
+        //   imageSection.style.display="none"
+        //   resultsContainer.textContent = "";
 
-        }
-        else if(id === 'fourMan') {
-          resultsContainer.classList.add("one")
-          resultsContainer.classList.remove("myImage")
-          resultsContainer.classList.remove("myVideo")
-          resultsContainer.classList.add("myNews")
-          imageSectionE2.style.display="block"
-          imageSectionE1.style.display="none"
-          imageSection.style.display="none"
+        //   const apiKey = "c792f175ff0945a19bd297346d0ffafe";
+        //   let nextPageToken = '';
+        //   let currentQuery = '';
+      
+        //   function startSearch() {
+        //     // const query = document.getElementById("searchInput").value.trim();
+        //     userValue = searchInput.value;
+        //     const query = userValue;
+
+        //     // if (!query) return alert("Please enter a search term");
+        //     if(userValue===""){
+        //       showPopup("Start typing and hit enter to search for videos !")
+        //       resultsContainer.textContent=""
+        //       // spinnerE1.classList.toggle("d-none")
+        //       spinnerE1.classList.add("d-none");
+        //     }
+        //     else{
+        //     currentQuery = query;
+        //     nextPageToken = ''; // reset token
+        //     // document.getElementById("result").innerHTML = "Loading...";
+        //     searchVideo(query, true);
+        //     // if (isNewSearch) {
+        //     //   page = 1; // Reset page on new search
+        //     //   resultsContainer.innerHTML = ""; // Clear only on new search
+        //     //   if (showMore) {
+        //     //     showMore.remove();
+        //     //     showMore = null;
+        //     //   }
+        //     // }
+        //   }
+      
+        //   function loadMore() {
+        //     searchVideo(currentQuery, false);
+        //   }
+      
+        //   function searchVideo(query, isNewSearch = false) {
+        //     const url = new URL(`https://newsapi.org/v2/everything?q=tesla&from=2025-03-06&sortBy=publishedAt&apiKey=${apiKey}`);
+            
+        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+      
+        //     fetch(url.toString())
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         const results = data.articles;
+        //         nextPageToken = data.nextPageToken || '';
+        //         // const showMoreBtn = document.getElementById("showMoreBtn");
+        //         if (isNewSearch) {
+        //           page = 1; // Reset page on new search
+        //           resultsContainer.innerHTML = ""; // Clear only on new search
+        //           if (showMore) {
+        //             showMore.remove();
+        //             showMore = null;
+        //           }
+        //         }
+        //         if (results.length) {
+        //           let html = '';
+        //           results.forEach(article => {
+        //             const title = article.title;
+        //             const description = article.description;
+        //             const urlE1 = article.url;
+        //             const imageHi = article.urlToImage;
+        //             // const url = `https://www.youtube.com/watch?v=${videoId}`;
+      
+        //             html += `
+        //               <div class="news-card">
+                      
+        //                 <div class ="news-frame">
+                      
+        //                <img src="${imageHi}" class="news-img" alt="No Image"
+        //                onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+        //                 <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+        //                 </div>
+        //                <hr />
+        //                 <p class = "news-para11">${description}</p>
+        //               </div>
+        //             `;
+        //         //     let twoDivContainer = document.createElement('div')
+        //         // twoDivContainer.classList.add("two-container")
+
+        //         // let imgBox = document.createElement('div');
+        //         // imgBox.classList.add("sectionA")
+        //         // let img = document.createElement('img');
+        //         // img.classList.add("image-photo")
+        //         // img.src = result.urls.small;
+        //         // // img.href="links.self"
+        //         // img.addEventListener("click", () => {
+        //         //   const wikiSearch = encodeURIComponent(searchKeyword);
+        //         //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
+        //         //   window.open(wikiUrl, '_blank'); // open in new tab
+        //         // });
+        //         // imgBox.appendChild(img);
+        //         // twoDivContainer.append(imgBox)
+        //         // resultsContainer.appendChild(twoDivContainer);
+        //           });
+      
+        //           if (isNewSearch) {
+        //             resultsContainer.innerHTML = html;
+        //           } else {
+        //            resultsContainer.insertAdjacentHTML('beforeend', html);
+        //           }
+        //           if (!showMore) {
+        //             let assumeShow = document.createElement('div')
+        //             assumeShow.classList.add("assume-show")
+                    
+        //             showMore = document.createElement('button');
+        //             showMore.textContent = "View More";
+        //             showMore.classList.add("showE1");
+        //             showMore.style.display = "block";
+        //             assumeShow.append(showMore)
+        //             imageSectionE2.append(assumeShow)
+        //             // console.log(imageSection)
+        //             document.body.appendChild(imageSectionE2);
+            
+        //               showMore.addEventListener("click", () => {
+        //               page++;
+        //               loadMore() // Load next page
+        //             });
+        //           }
+      
+        //           // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
+        //         } else {
+        //           resultsContainer.innerHTML = "No results found.";
+        //           showMore.style.display = 'none';
+        //         }
+        //       })
+        //       .catch(err => {
+        //         console.error("Error:", err);
+        //         resultsContainer.innerHTML = "Error fetching video.";
+        //       }
+        //     );
+        //   }
+        // }
+        // startSearch()
+
+        
+        // }
+        else if (id === 'fourMan') {
+          resultsContainer.classList.add("one");
+          resultsContainer.classList.remove("myImage", "myVideo");
+          resultsContainer.classList.add("myNews");
+        
+          imageSectionE2.style.display = "block";
+          imageSectionE1.style.display = "none";
+          imageSection.style.display = "none";
           resultsContainer.textContent = "";
-
+        
           const apiKey = "c792f175ff0945a19bd297346d0ffafe";
           let nextPageToken = '';
           let currentQuery = '';
-      
+        
           function startSearch() {
-            // const query = document.getElementById("searchInput").value.trim();
             userValue = searchInput.value;
             const query = userValue;
-
-            // if (!query) return alert("Please enter a search term");
-            if(userValue===""){
-              showPopup("Start typing and hit enter to search for videos !")
-              resultsContainer.textContent=""
-              // spinnerE1.classList.toggle("d-none")
-              spinnerE1.classList.add("d-none");
+        
+            if (userValue === "") {
+              showPopup("Start typing and hit enter to search for news!");
+              resultsContainer.textContent = "";
+              spinnerE1.classList.add("d-none"); // Hide spinner if empty
+              return;
             }
-            else{
+        
             currentQuery = query;
-            nextPageToken = ''; // reset token
-            // document.getElementById("result").innerHTML = "Loading...";
-            searchVideo(query, true);
-            // if (isNewSearch) {
-            //   page = 1; // Reset page on new search
-            //   resultsContainer.innerHTML = ""; // Clear only on new search
-            //   if (showMore) {
-            //     showMore.remove();
-            //     showMore = null;
-            //   }
-            // }
+            nextPageToken = '';
+            searchVideo(query, true); // Start new search
           }
-      
+        
           function loadMore() {
-            searchVideo(currentQuery, false);
+            searchVideo(currentQuery, false); // Load next page
           }
-      
+        
           function searchVideo(query, isNewSearch = false) {
-            const url = new URL(`https://newsapi.org/v2/everything?q=tesla&from=2025-03-06&sortBy=publishedAt&apiKey=${apiKey}`);
-            
+            const url = new URL(`https://newsapi.org/v2/everything?q=${query}&from=2025-03-06&sortBy=publishedAt&apiKey=${apiKey}`);
             if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
-      
+        
+            spinnerE1.classList.remove("d-none"); 
+        
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
                 const results = data.articles;
                 nextPageToken = data.nextPageToken || '';
-                // const showMoreBtn = document.getElementById("showMoreBtn");
+        
                 if (isNewSearch) {
-                  page = 1; // Reset page on new search
-                  resultsContainer.innerHTML = ""; // Clear only on new search
+                  page = 1;
+                  resultsContainer.innerHTML = "";
                   if (showMore) {
                     showMore.remove();
                     showMore = null;
                   }
                 }
+        
                 if (results.length) {
                   let html = '';
                   results.forEach(article => {
@@ -1090,81 +1396,62 @@ fetch(url, options)
                     const description = article.description;
                     const urlE1 = article.url;
                     const imageHi = article.urlToImage;
-                    // const url = `https://www.youtube.com/watch?v=${videoId}`;
-      
+        
                     html += `
                       <div class="news-card">
-                      
-                        <div class ="news-frame">
-                      
-                       <img src="${imageHi}" class="news-img" alt="No Image"
-                       onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
-                        <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+                        <div class="news-frame">
+                          <img src="${imageHi}" class="news-img" alt="No Image"
+                          onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                          <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
                         </div>
-                       <hr />
-                        <p class = "news-para11">${description}</p>
+                        <hr />
+                        <p class="news-para11">${description}</p>
                       </div>
                     `;
-                //     let twoDivContainer = document.createElement('div')
-                // twoDivContainer.classList.add("two-container")
-
-                // let imgBox = document.createElement('div');
-                // imgBox.classList.add("sectionA")
-                // let img = document.createElement('img');
-                // img.classList.add("image-photo")
-                // img.src = result.urls.small;
-                // // img.href="links.self"
-                // img.addEventListener("click", () => {
-                //   const wikiSearch = encodeURIComponent(searchKeyword);
-                //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
-                //   window.open(wikiUrl, '_blank'); // open in new tab
-                // });
-                // imgBox.appendChild(img);
-                // twoDivContainer.append(imgBox)
-                // resultsContainer.appendChild(twoDivContainer);
                   });
-      
+        
                   if (isNewSearch) {
                     resultsContainer.innerHTML = html;
                   } else {
-                   resultsContainer.insertAdjacentHTML('beforeend', html);
+                    resultsContainer.insertAdjacentHTML('beforeend', html);
                   }
+        
                   if (!showMore) {
-                    let assumeShow = document.createElement('div')
-                    assumeShow.classList.add("assume-show")
-                    
+                    let assumeShow = document.createElement('div');
+                    assumeShow.classList.add("assume-show");
+        
                     showMore = document.createElement('button');
                     showMore.textContent = "View More";
                     showMore.classList.add("showE1");
                     showMore.style.display = "block";
-                    assumeShow.append(showMore)
-                    imageSectionE2.append(assumeShow)
-                    // console.log(imageSection)
+                    assumeShow.append(showMore);
+        
+                    imageSectionE2.append(assumeShow);
                     document.body.appendChild(imageSectionE2);
-            
-                      showMore.addEventListener("click", () => {
+        
+                    showMore.addEventListener("click", () => {
                       page++;
-                      loadMore() // Load next page
+                      loadMore();
                     });
                   }
-      
-                  // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
                 } else {
-                  resultsContainer.innerHTML = "No results found.";
-                  showMore.style.display = 'none';
+                  showPopup("No Result found on news try to enter again !");
+                  resultsContainer.textContent = "";
+                  if (showMore) showMore.style.display = 'none';
                 }
               })
               .catch(err => {
                 console.error("Error:", err);
-                resultsContainer.innerHTML = "Error fetching video.";
-              }
-            );
+                resultsContainer.innerHTML = "Error fetching news.";
+              })
+              .finally(() => {
+                spinnerE1.classList.add("d-none"); 
+              });
           }
-        }
-        startSearch()
-
         
+          startSearch();
         }
+        
         
     });
   });
