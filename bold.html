@@ -1,94 +1,148 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>YouTube Video Search with Show More</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Live Image Search</title>
   <style>
-    body { font-family: Arial, sans-serif; padding: 20px; }
-    #result { margin-top: 20px; display: flex; flex-direction: column; gap: 20px; }
-    .video-card { border: 1px solid #ccc; padding: 10px; border-radius: 10px; }
-    iframe { width: 100%; max-width: 560px; height: 315px; }
-    a { text-decoration: none; color: #1a0dab; font-weight: bold; }
-    #showMoreBtn { margin-top: 20px; padding: 10px 20px; font-size: 16px; display: none; }
+    body {
+      font-family: Arial, sans-serif;
+      padding: 20px;
+      background: #f8f9fa;
+    }
+
+    h1 {
+      text-align: center;
+      color: #333;
+    }
+
+    #searchContainer {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    #searchInput {
+      padding: 10px;
+      width: 300px;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+    }
+
+    #searchBtn {
+      padding: 10px 20px;
+      border: none;
+      background-color: #007bff;
+      color: white;
+      border-radius: 8px;
+      cursor: pointer;
+    }
+
+    #searchBtn:hover {
+      background-color: #0056b3;
+    }
+
+    #spinner {
+      text-align: center;
+      margin: 20px;
+      font-weight: bold;
+    }
+
+    .d-none {
+      display: none;
+    }
+
+    .image-card {
+      background-color: white;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      max-width: 400px;
+      margin: 10px auto;
+      text-align: center;
+    }
+
+    .image-card img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 6px;
+    }
+
+    .image-card p {
+      color: #555;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
-  <h2>YouTube Video Search</h2>
-  <input type="text" id="searchInput" placeholder="Search for a video..." />
-  <button onclick="startSearch()">Search</button>
 
-  <div id="result"></div>
-  <button id="showMoreBtn" onclick="loadMore()">Show More</button>
+  <h1>Live Image Search</h1>
+  <div id="searchContainer">
+    <input type="text" id="searchInput" placeholder="Search for images..." />
+    <button id="searchBtn">Search</button>
+  </div>
+
+  <div id="spinner" class="d-none">Loading...</div>
+  <div id="resultsContainer"></div>
 
   <script>
-    const apiKey = "AIzaSyCjAxSw3sw21SYl_ASmnjeOsTq9ooRluZQ";
-    let nextPageToken = '';
-    let currentQuery = '';
+    const searchBtn = document.getElementById("searchBtn");
+    const searchInput = document.getElementById("searchInput");
+    const resultsContainer = document.getElementById("resultsContainer");
+    const spinner = document.getElementById("spinner");
 
-    function startSearch() {
-      const query = document.getElementById("searchInput").value.trim();
-      if (!query) return alert("Please enter a search term");
-      
-      currentQuery = query;
-      nextPageToken = ''; // reset token
-      document.getElementById("result").innerHTML = "Loading...";
-      searchVideo(query, true);
-    }
+    const apiKey = "49671633-184f23eef7e7e0b0d111e40c0"; // Your Pixabay API key
 
-    function loadMore() {
-      searchVideo(currentQuery, false);
-    }
+    searchBtn.addEventListener("click", () => {
+      const query = searchInput.value.trim();
 
-    function searchVideo(query, isNewSearch = false) {
-      const url = new URL('https://www.googleapis.com/youtube/v3/search');
-      url.searchParams.set('part', 'snippet');
-      url.searchParams.set('type', 'video');
-      url.searchParams.set('maxResults', '5');
-      url.searchParams.set('q', query);
-      url.searchParams.set('key', apiKey);
-      if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+      if (!query) {
+        alert("Please enter something to search.");
+        return;
+      }
 
-      fetch(url.toString())
-        .then(res => res.json())
-        .then(data => {
-          const results = data.items;
-          nextPageToken = data.nextPageToken || '';
-          const showMoreBtn = document.getElementById("showMoreBtn");
+      resultsContainer.innerHTML = "";
+      spinner.classList.remove("d-none");
 
-          if (results.length) {
-            let html = '';
-            results.forEach(video => {
-              const videoId = video.id.videoId;
-              const title = video.snippet.title;
-              const description = video.snippet.description;
-              const url = `https://www.youtube.com/watch?v=${videoId}`;
-
-              html += `
-                <div class="video-card">
-                  <a href="${url}" target="_blank">${title}</a>
-                  <iframe src="https://www.youtube.com/embed/${videoId}" allowfullscreen></iframe>
-                  <p>${description}</p>
-                </div>
-              `;
-            });
-
-            if (isNewSearch) {
-              document.getElementById("result").innerHTML = html;
-            } else {
-              document.getElementById("result").insertAdjacentHTML('beforeend', html);
-            }
-
-            showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
-          } else {
-            document.getElementById("result").innerHTML = "No results found.";
-            showMoreBtn.style.display = 'none';
+      fetch(`https://pixabay.com/api/?key=${apiKey}&q=${encodeURIComponent(query)}&image_type=photo&pretty=true`)
+        .then((res) => res.json())
+        .then((data) => {
+          const images = data.hits;
+          console.log(images)
+          if (!images || images.length === 0) {
+            resultsContainer.innerHTML = "<p>No images found!</p>";
+            return;
           }
+
+          let html = "";
+          images.forEach((img) => {
+            html += `
+              <div class="image-card">
+                <img src="${img.webformatURL}" alt="${img.tags}" />
+                <p>${img.type}</p>
+              </div>
+            `;
+          });
+
+          resultsContainer.innerHTML = html;
         })
-        .catch(err => {
-          console.error("Error:", err);
-          document.getElementById("result").innerHTML = "Error fetching video.";
+        .catch((err) => {
+          console.error("Error fetching images:", err);
+          resultsContainer.innerHTML = "<p>Something went wrong.</p>";
+        })
+        .finally(() => {
+          spinner.classList.add("d-none");
         });
-    }
+    });
+
+    // Trigger search on "Enter"
+    searchInput.addEventListener("keyup", (e) => {
+      if (e.key === "Enter") {
+        searchBtn.click();
+      }
+    });
   </script>
 </body>
 </html>

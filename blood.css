@@ -377,18 +377,8 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
     background-color: rgb(107, 104, 104);
     border: none;
   }
-  .frame {
-   display: flex;
-   align-items: center;
-   gap: 11px;
-   margin-bottom: 11px;
-  }
-  .news-img{
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-    object-fit: cover;
-  }
+ 
+  
   .news-card{
     overflow-x: hidden;
     background-color: #ffffff;
@@ -418,6 +408,25 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
     font-size: 15px;
     color: black;
     text-decoration: none;
+  }
+  .buttonE1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+    margin-bottom: 5px;
+  }
+  .b1{
+    border: none;
+    border-radius: 5px;
+    padding: 7px 11px;
+    letter-spacing: 1.25px;
+    outline: none;
+    background-color:  #5463e8;
+    color: #fff;
+  }
+  .b1:hover{
+    background-color: hsl(248, 99%, 58%);
   }
   .news-img {
     /* width: 100%;
@@ -453,9 +462,85 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
   .news-frame {
    display: flex;
    align-items: center;
-   gap: 11px;
+   justify-content: center;
+   display: grid;
+   grid-template-columns: auto auto;
+   gap: 18px;
    margin-bottom: 11px;
   }
+  .showE11{
+    font-size: 18px;
+     font-family: poppins,sans-serif;
+     font-weight: 459;
+     color: #ece9e9;
+     background-color: hsl(17, 99%, 49%);
+     border: none;
+     display: none;
+     /* width: 150px; */
+     margin: auto;
+     border-radius: 5px;
+     outline: none;
+     margin-top: 11px;
+     padding: 7px 17px;
+     margin-bottom: 15px;
+ }
+ .showE11:hover{
+     background-color: #1022c2;
+     color: #fff;
+     font-weight: 559;
+     transition: 0.25s ease-in;
+ }
+ @media (min-width:450px) and (max-width:724px) {
+  .frame11{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+ }
+ }
+ 
+ @media (max-width:449px) {
+  .frame11 {
+    display: flex;
+    align-items: center;
+    gap: 11px;
+    margin-bottom: 11px;
+   }
+   .linkMan{
+    margin-right: 5px;
+   }
+ }
+@media (max-width:379px) {
+  .frame {
+    display: flex;
+    align-items: center;
+    display: grid;
+    grid-template-columns: 80% 20%;
+    gap: 11px;
+    margin-bottom: 11px;
+   }
+
+   .hidden {
+     width: 100px;
+     height: 100px;
+     margin: auto;
+     border-radius: 50%;
+     overflow: hidden;
+     position: relative;
+   }
+   
+   .news-img {
+     width: 100%;
+     height: 100%;
+     border-radius: 50%;
+     object-fit: cover;
+     transition: transform 0.7s ease;
+   }
+   
+   .news-img:hover {
+     transform: scale(1.12);
+     transition: transform 0.5s ease-in-out;
+   }
+}
 @media (min-width:380px) and (max-width:599px) {
     .sameE1{
         font-size: 18px;
@@ -486,6 +571,35 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
         outline: none;
         /* flex-basis: 48% 48%; */
     }
+    .frame {
+      display: flex;
+      align-items: center;
+      display: grid;
+      grid-template-columns: 80% 20%;
+      gap: 11px;
+      margin-bottom: 11px;
+     }
+     .hidden {
+       width: 100px;
+       height: 100px;
+       margin: auto;
+       border-radius: 50%;
+       overflow: hidden;
+       position: relative;
+     }
+     
+     .news-img {
+       width: 100%;
+       height: 100%;
+       border-radius: 50%;
+       object-fit: cover;
+       transition: transform 0.7s ease;
+     }
+     
+     .news-img:hover {
+       transform: scale(1.12);
+       transition: transform 0.5s ease-in-out;
+     }
     .myImage{
         display: grid;
         grid-template-columns: 49% 49% ;
