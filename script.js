@@ -131,6 +131,21 @@ function setActive(button) {
   const buttons = document.querySelectorAll('.tab-button');
   buttons.forEach(btn => btn.classList.remove('active'));
   button.classList.add('active');
+  console.log("hii")
+}
+
+function setActiveE1() {
+  const buttons = document.getElementById('oneMan');
+  // buttons.classList.remove('active');
+  buttons.classList.add('active');
+  console.log("hii")
+  const btn2 = document.getElementById('twoMan')
+  const btn3 = document.getElementById('thirdMan')
+  const btn4 = document.getElementById('fourMan')
+
+  btn2.classList.remove('active')
+  btn3.classList.remove('active')
+  btn4.classList.remove('active')
 }
 
 let mainDiv = document.createElement('div')
@@ -156,6 +171,7 @@ oneDiv.id="oneMan"
 oneDiv.classList.add("one-show","tab-button")
 oneDiv.addEventListener("click",function() {
   setActive(this)
+  
   
 })
 // oneDiv.addEventListener("click",()=>{
@@ -277,6 +293,8 @@ oneDivE1.classList.add("one-show","tab-button")
 oneDivE1.id="twoMan"
 oneDivE1.addEventListener("click",function() {
 setActive(this)
+ let ke = document.getElementById('coolAnoop');
+ ke.style.display="block"
 })
 let iconSymbolE1 = document.createElement('i')
 iconSymbolE1.classList.add("fa-solid","fa-image","sameE1")
@@ -322,7 +340,6 @@ displayIcons.append(oneDiv,oneDivE1,oneDivE2,oneDivE3)
 fragmentsContainer.append(displayIcons)
 document.body.append(fragmentsContainer)
 
-
 let man = document.getElementById('searchMan')
 
 let spinnerE1 = document.getElementById('spinner');
@@ -334,9 +351,212 @@ resultsContainer.id = "results";
 resultsContainer.classList.add("display-items","one","myImage","myVideo","myNews")
 document.body.append(resultsContainer);
 
+// let newContainer = document.createElement('div')
+// newContainer.classList.add("news-container")
+
+// apiKey = "5ed2a146561f4906ed6015debde2260a"
+
+// const url = new URL(`https://gnews.io/api/v4/search?q=sports&token=${apiKey}&lang=en`);
+
+// fetch(url)
+// .then(function (res){
+//   return res.json()
+// })
+// .then(function(jsonData){
+//   console.log(jsonData)
+// // {content,description,images,publishedAt,link} = articles;
+
+// let results = jsonData.articles;
+
+// // function loadMore() {
+// //   searchVideo(currentQuery, false); 
+// // }
+
+//         // if (isNewSearch) {
+//         //   page = 1;
+//         //   resultsContainer.innerHTML = "";
+//         //   if (showMore) {
+//         //     showMore.remove();
+//         //     showMore = null;
+//         //   }
+//         // }
+
+//         if (results.length>1) {
+//           let html = '';
+//           results.forEach(article => {
+//             const title = article.title;
+//             const description = article.description;
+//             const urlE1 = article.url;
+//             const imageHi = article.image;
+            
+//             html += `
+//               <div class="news-card">
+//                 <div class="news-frame">
+//                 <div class = "hidden">
+//                   <img src="${imageHi}" class="news-img" alt="No Image"
+//                   onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+//                   </div>
+//                   <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+//                 </div>
+//                 <hr />
+//                 <p class="news-para11">${description}</p>
+//                 <div class="buttonE1">
+//                 <a href="${urlE1}" target="_blank">
+//                 <button class = "b1">Read more</button>
+//                 </a>
+//                 </div>
+//               </div>
+//             `;
+//           });
+
+         
+//             resultsContainer.innerHTML = html;
+         
+//             // resultsContainer.insertAdjacentHTML('beforeend', html);
+      
+
+          
+//         }
+//       })
+// const apiKey = "5ed2a146561f4906ed6015debde2260a";
+// const apiKey = "58cca065177e920f5ebcddc3061d8586"
+const apiKey = "b7716e563019c757f88b83a5efa71c5e"
+// let nextPageToken = '';
+// let currentQuery = '';
+let showMore = null;
+// let page = 1;
+  // nextPageToken = '';
+  searchVideo( true); 
+
+
+function loadMore() {
+  searchVideo( false); 
+}
+
+function searchVideo( isNewSearch = false) {
+
+  const topics = ["Tollywood","Movies","Indian news","sports","cricket","Indian politics","Hindu"];
+  const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+
+  const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(randomTopic)}&token=${apiKey}&lang=en`);
+  // if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+
+  spinnerE1.classList.remove("d-none"); 
+
+  fetch(url.toString())
+    .then(res => res.json())
+    .then(data => {
+          resultsContainer.classList.add("one");
+          resultsContainer.classList.remove("myImage", "myVideo");
+          resultsContainer.classList.add("myNews");
+
+          
+
+          // imageSectionE2.style.display = "block";
+          // imageSectionE1.style.display = "none";
+          // imageSection.style.display = "none";
+          // resultsContainer.textContent = "";
+
+          let focus = document.getElementById('coolAnoop')
+          focus.innerHTML="" // for hiding the button check it once the server came
+          imageSectionE2.innerHTML=""
+      const results = data.articles;
+      console.log(results)
+      nextPageToken = data.nextPageToken || '';
+
+      if (isNewSearch) {
+        // page = 1;
+        resultsContainer.innerHTML = "";
+        if (showMore) {
+          showMore.remove();
+          showMore = null;
+        }
+      }
+
+      if (results.length>1) {
+        let html = '';
+        results.forEach(article => {
+          const title = article.title;
+          const description = article.description;
+          const urlE1 = article.url;
+          const imageHi = article.image;
+          
+          html += `
+            <div class="news-card">
+              <div class="news-frame">
+              <div class = "hidden">
+                <img src="${imageHi}" class="news-img" alt="No Image"
+                onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                </div>
+                <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+              </div>
+              <hr />
+              <p class="news-para11">${description}</p>
+              <div class="buttonE1">
+              <a href="${urlE1}" target="_blank">
+              <button class = "b1">Read more</button>
+              </a>
+              </div>
+            </div>`
+          ;
+        });
+
+        if (isNewSearch) {
+          resultsContainer.innerHTML = html;
+        } else {
+          resultsContainer.insertAdjacentHTML('beforeend', html);
+        }
+
+        if (!showMore) {
+          spinnerE1.classList.add("d-none"); 
+
+          let assumeShow = document.createElement('div');
+          assumeShow.classList.add("assume-show");
+
+          showMore = document.createElement('button');
+          showMore.textContent = "View More";
+          showMore.classList.add("showE11");
+          showMore.style.display = "block";
+          assumeShow.append(showMore);
+
+          imageSectionE2.append(assumeShow);
+          document.body.appendChild(imageSectionE2);
+
+          showMore.addEventListener("click", () => {
+            // page++;
+            loadMore();
+          });
+        }
+      } else {
+        showPopup("No Result found on news try to enter again !");
+        resultsContainer.textContent = "";
+        if (showMore) showMore.style.display = 'none';
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = "Error fetching news.";
+    })
+    .finally(() => {
+      spinnerE1.classList.add("d-none"); 
+    });
+}  
+
+   
 
 function searv(event){
+  console.log(event)
   if(event.key === "Enter"){
+    
+    setActiveE1()
+
+    
+
+    let ke = document.getElementById('coolAnoop');
+    ke.style.display="none"
+    // let kk = document.getElementById('imageSection')
+    // kk.style.display="none"
+
     resultsContainer.classList.add("one")
     resultsContainer.classList.remove("myImage")
     resultsContainer.classList.remove("myVideo")
@@ -355,136 +575,13 @@ function searv(event){
       return;
     }
 
-  //   function showPopup(message) {
-  //     let popupE1 = document.createElement('div');
-  //     popupE1.classList.add('popupE1');
-  //     popupE1.style.position = 'absolute';
-  //     popupE1.style.top = '-100px';
-  //     popupE1.style.left = '50%';
-  //     popupE1.style.transform = 'translate(-50%, -50%)';
-  //     popupE1.style.backgroundColor = 'white';
-  //     popupE1.style.padding = '30px';
-  //     popupE1.style.boxShadow = '0px 0px 10px rgba(0,0,0,0.5)';
-  //     popupE1.style.transition='top 0.6s ease-in-out'
-  //     popupE1.innerHTML = `<p class = "para">${message}</p>
-  //     <button id = "pop-up-message" onclick="location.reload()">Re-Enter</button>`;
-  //     let imageEl1 = document.createElement('div')
-  //     imageEl1.classList.add("imageE11")
-  
-  //     let imageInsideE1 = document.createElement('img')
-  //     imageInsideE1.classList.add("image-insideE1")
-  //     imageInsideE1.src="https://cdn-icons-png.flaticon.com/512/2748/2748558.png"
-  
-  //     let wrongContainerE1 = document.createElement('div')
-  //     wrongContainerE1.classList.add("wrong-containerE1")
-  
-  //     let wrongIconE1 = document.createElement('i')
-  //     wrongIconE1.classList.add("fas","fa-times","iconE1");
-  //     wrongIconE1.style.fontSize = "20px";
-  
-  //     wrongContainerE1.addEventListener("click",function(){
-  //         popupE1.style.display="none"
-         
-  //     })
-  //     imageEl1.append(imageInsideE1)
-  //     wrongContainerE1.append(wrongIconE1)
-  //     popupE1.appendChild(imageEl1)
-  //     popupE1.appendChild(wrongContainerE1)
-  //     document.body.appendChild(popupE1);
-  
-  //     setTimeout(() => {
-  //         popupE1.style.top = "50%"
-  //     },100)
-  // }
   
     let url = "https://apis.ccbp.in/wiki-search?search=" + man;
     let options = {
       method: "GET"
     }
 
-  //   fetch(url,options)
-
-  //   .then(function(response){
-  //     return response.json()
-  //   })
-  //   .then(function(jsonData){
-  //   // resultsContainer.innerHTML = "";
-  //   // console.log(jsonData.search_results[5].title)
-  //   // let search_results = jsonData;
-  //   // console.log(search_results)
-  //   console.log(jsonData)
-    
-  //   let { search_results } = jsonData; // this is used for
-  //   // Instead of writing
-  //   //  jsonData.search_results, 
-  //   // you can directly use search_results.
-  //   // this is known as object destructing !
-  //     console.log(search_results)
-
-  //     resultsContainer.textContent="";
-  //     if(!search_results || search_results.length ===0) {
-        
-  //       // resultsContainer.textContent = "No results found. Please try a different search term.";
-  //       showPopupE1("No results found. Please try a different search term.")
-  //       return;
-  //     }
-
-    
-
-  //   search_results.forEach((user) =>{
-  //   console.log(user.title)
-
-  //   let mainOne = document.createElement('div')
-
-
-  //   let main = document.createElement('div')
-  //   main.classList.add("color-less")
-
-
-  //   let titleE1 = document.createElement('a')
-  //   titleE1.classList.add("title")
-  //   titleE1.href=user.link
-  //   titleE1.textContent=user.title;
-  //   titleE1.target="_blank"
-    
-  //   let breakE1 = document.createElement('br')
-
-  //   let linkE1 = document.createElement('a')
-  //   linkE1.classList.add("link")
-  //   linkE1.href=user.link
-  //   linkE1.textContent=user.link
-  //   linkE1.target="_blank"
-
-  //   let descriptionE1 = document.createElement('p')
-  //   descriptionE1.classList.add("description")
-  //   descriptionE1.textContent=user.description
-
-  //   main.append(titleE1,linkE1,descriptionE1)
-  //   mainOne.append(main)
-  //   console.log(user.link)
-
-  //   console.log(user.description)
-  //   resultsContainer.append(mainOne);
-  //   // return mainOne
-  //  });
-
-  //     // return user.title;
-  //     // console.log(ids)
-  //   // resultsContainer.innerHTML = "";
-  //   spinnerE1.classList.toggle("d-none")
-
-  //     // resultsContainer.append(...elements);
-  //     // spread operator expands an array 
-  //     // into individual values.
-  //     // always using three dots for spread operator
-  //   })
-  //   .catch(error => {
-  //     console.error("Fetch error:", error);
-  //     resultsContainer.textContent = "Failed to fetch results. Please try again later.";
-  // })
-  // .finally(() => {
-  //     spinnerE1.classList.add("d-none");  // Hide spinner after request completes (success or error)
-  // });
+ 
 
   function displaySearchResults(jsonData) {
     console.log(jsonData);
@@ -536,7 +633,7 @@ function searv(event){
     spinnerE1.classList.toggle("d-none");
 }
 
-// Fetch call
+
 fetch(url, options)
     .then(response => response.json())
     .then(displaySearchResults)
@@ -553,27 +650,7 @@ fetch(url, options)
   }
     searchInput.addEventListener("keydown",searv)
 
-    // async function searchImage() {
-    //   let userMan = document.getElementById('searchMan').value;
-    //   console.log(userMan)
-    //   let url = `https://api.unsplash.com/search/photos?query=${userMan}&client_id=${accessKey}`
-    //   console.log(url)
-
-    //   let response = await fetch(url)
-    //   let data = await response.json()
-
-    //   let results = data.results
-
-    //   results.map((result)=>{
-        
-    //     let assam = document.createElement('div')
-    //     let mainaaam = document.createElement('img')
-    //     mainaaam.src=result.urls.small;
-    //     assam.append(mainaaam)
-    //     document.body.append(assam)
-
-    //   })
-    // }
+   
     function hidePopup() {
       const popup = document.getElementById("popup");
       console.log("hii")
@@ -588,8 +665,8 @@ fetch(url, options)
     let imageSectionE2 = document.getElementById('imageSectionE2')
    
     const buttons = document.querySelectorAll(".one-show");
-    let page = 1;
-    let showMore = null;
+    // let page = 1;
+    // let showMore = null;
     buttons.forEach(button => {
       button.addEventListener("click", () => {
         const id = button.id;
@@ -651,6 +728,7 @@ fetch(url, options)
               resultsContainer.textContent="";
               if(!search_results || search_results.length ===0) {
                 spinnerE1.classList.add("d-none");
+                 
                 // resultsContainer.textContent = "No results found. Please try a different search term.";
                 showPopupE1("No results found. Please try a different search term.")
                 return;
@@ -1037,10 +1115,10 @@ fetch(url, options)
             }
           }
         
-          // 🔁 Call initially
+
           searchImage(true);
         
-          // ⌨️ Trigger search when Enter is pressed
+
           searchInputMan.addEventListener("keypress", function (e) {
             if (e.key === "Enter") {
               e.preventDefault();
@@ -1050,162 +1128,472 @@ fetch(url, options)
         }
         
         
-        else if(id === 'thirdMan') {
+        // else if(id === 'thirdMan') {
           
-          resultsContainer.classList.add("one")
-          resultsContainer.classList.remove("myImage")
-          resultsContainer.classList.add("myVideo")
-          resultsContainer.classList.remove("myNews")
-          imageSectionE1.style.display="block"
-          imageSectionE2.style.display="none"
-          imageSection.style.display="none"
-          imageSectionE1.innerHTML=""
+        //   resultsContainer.classList.add("one")
+        //   resultsContainer.classList.remove("myImage")
+        //   resultsContainer.classList.add("myVideo")
+        //   resultsContainer.classList.remove("myNews")
+        //   imageSectionE1.style.display="block"
+        //   imageSectionE2.style.display="none"
+        //   imageSection.style.display="none"
+        //   imageSectionE1.innerHTML=""
         
-          let focus = document.getElementById('coolAnoop')
-          focus.innerHTML=""
-          resultsContainer.textContent = "";
+        //   let focus = document.getElementById('coolAnoop')
+        //   focus.innerHTML=""
+        //   resultsContainer.textContent = "";
           
+        //   const apiKey = "AIzaSyBGP9U1AyGAXrFtBDSPqJfdAf0h1MgohZ4";
+        //   let nextPageToken = '';
+        //   let currentQuery = '';
+      
+        //   function startSearch() {
+        //     // const query = document.getElementById("searchInput").value.trim();
+        //     userValue = searchInput.value;
+        //     const query = userValue;
+
+        //     // if (!query) return alert("Please enter a search term");
+        //     if(userValue===""){
+        //       showPopup("Start typing and hit Enter to search Wikipedia.")
+        //       resultsContainer.textContent=""
+        //       // spinnerE1.classList.toggle("d-none")
+        //       spinnerE1.classList.add("d-none");
+        //     }
+        //     else{
+        //     currentQuery = query;
+        //     nextPageToken = ''; // reset token
+        //     // document.getElementById("result").innerHTML = "Loading...";
+        //     searchVideo(query, true);
+        //     // if (isNewSearch) {
+        //     //   page = 1; // Reset page on new search
+        //     //   resultsContainer.innerHTML = ""; // Clear only on new search
+        //     //   if (showMore) {
+        //     //     showMore.remove();
+        //     //     showMore = null;
+        //     //   }
+        //     // }
+        //   }
+      
+        //   function loadMore() {
+        //     searchVideo(currentQuery, false);
+        //   }
+      
+        //   function searchVideo(query, isNewSearch = false) {
+        //     const url = new URL('https://www.googleapis.com/youtube/v3/search');
+        //     // console.log(url)
+        //     url.searchParams.set('part', 'snippet');
+        //     url.searchParams.set('type', 'video');
+        //     url.searchParams.set('maxResults', '10');
+        //     url.searchParams.set('q', query);
+        //     url.searchParams.set('key', apiKey);
+        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+
+        //      spinnerE1.classList.remove("d-none");
+
+        //     fetch(url.toString())
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         spinnerE1.classList.add("d-none")
+        //         const results = data.items;
+        //         console.log(results)
+        //         nextPageToken = data.nextPageToken || '';
+        //         // const showMoreBtn = document.getElementById("showMoreBtn");
+        //         if (isNewSearch) {
+        //           page = 1; 
+        //           resultsContainer.innerHTML = ""; 
+        //           if (showMore) {
+        //             showMore.remove();
+        //             showMore = null;
+        //           }
+        //         }
+        //         if (results.length) {
+        //           let html = '';
+        //           results.forEach(video => {
+        //             const videoId = video.id.videoId;
+        //             const title = video.snippet.title;
+        //             const titleE1 = title.split("#")[0].trim();
+        //             const date = video.snippet.publishedAt
+        //             // console.log(date)
+                    
+        //             const dateOnly = new Date(date).toLocaleDateString('en-CA',{
+        //               year: 'numeric',
+        //               month: 'long',
+        //               day: 'numeric'
+        //             });
+        //             console.log(dateOnly)
+        //             const description = video.snippet.description;
+        //             const url = `https://www.youtube.com/watch?v=${videoId}`;
+      
+        //             html += `
+        //               <div class="video-card">
+                      
+        //                 <div class ="frame11">
+        //                 <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more attract"></iframe>
+                       
+        //                 <a href="${url}" target="_blank" class="titleE1" id="linkMan">${titleE1}</a>
+        //                 </div>
+        //                 <div class="date">
+        //                 <p class ="datePara">Published on ${dateOnly}</p>
+        //                 </div>
+        //                <hr />
+
+                       
+
+        //                  ${
+        //               description && description.length > 0
+        //                 ? `<p class="para11">${description}</p>`
+        //                 : `<p class="para11" style="text-align: center; font-weight: bold;">Oops Unable to fetch data !</p>`
+        //             }
+        //               </div>
+        //             `;
+
+                   
+
+        //         //     let twoDivContainer = document.createElement('div')
+        //         // twoDivContainer.classList.add("two-container")
+
+        //         // let imgBox = document.createElement('div');
+        //         // imgBox.classList.add("sectionA")
+        //         // let img = document.createElement('img');
+        //         // img.classList.add("image-photo")
+        //         // img.src = result.urls.small;
+        //         // // img.href="links.self"
+        //         // img.addEventListener("click", () => {
+        //         //   const wikiSearch = encodeURIComponent(searchKeyword);
+        //         //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
+        //         //   window.open(wikiUrl, '_blank'); // open in new tab
+        //         // });
+        //         // imgBox.appendChild(img);
+        //         // twoDivContainer.append(imgBox)
+        //         // resultsContainer.appendChild(twoDivContainer);
+        //           });
+      
+        //           if (isNewSearch) {
+        //             resultsContainer.innerHTML = html;
+        //           } else {
+        //            resultsContainer.insertAdjacentHTML('beforeend', html);
+        //           }
+        //           if (!showMore) {
+        //             let assumeShow = document.createElement('div')
+        //             assumeShow.classList.add("assume-show")
+                    
+        //             showMore = document.createElement('button');
+        //             showMore.textContent = "View More";
+        //             showMore.classList.add("showE1");
+        //             showMore.style.display = "block";
+        //             let spanLoad = document.createElement('span')
+        //             spanLoad.classList.add("btn-spinner","d-non")
+        //             showMore.append(spanLoad)
+        //             assumeShow.append(showMore)
+        //             imageSectionE1.append(assumeShow)
+        //             // console.log(imageSection)
+        //             document.body.appendChild(imageSectionE1);
+            
+        //               showMore.addEventListener("click", () => {
+        //               page++;
+        //               loadMore() // Load next page
+        //             });
+        //           }
+      
+        //           // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
+        //         } else {
+        //           resultsContainer.innerHTML = "No results found.";
+        //           showMore.style.display = 'none';
+        //         }
+        //       })
+        //       .catch(err => {
+        //         console.error("Error:", err);
+        //         resultsContainer.innerHTML = "Error fetching video.";
+        //         spinnerE1.classList.add("d-none");
+        //       });
+        //   }
+        // }
+        // startSearch()
+
+        // }
+
+        else if (id === 'thirdMan') {
+          resultsContainer.classList.add("one");
+          resultsContainer.classList.remove("myImage", "myNews");
+          resultsContainer.classList.add("myVideo");
+          imageSectionE1.style.display = "block";
+          imageSectionE2.style.display = "none";
+          imageSection.style.display = "none";
+          imageSectionE1.innerHTML = "";
+        
+          let focus = document.getElementById('coolAnoop');
+          focus.innerHTML = "";
+          resultsContainer.textContent = "";
+        
           const apiKey = "AIzaSyBGP9U1AyGAXrFtBDSPqJfdAf0h1MgohZ4";
           let nextPageToken = '';
           let currentQuery = '';
-      
+          let showMore = null;
+        
           function startSearch() {
-            // const query = document.getElementById("searchInput").value.trim();
-            userValue = searchInput.value;
-            const query = userValue;
-
-            // if (!query) return alert("Please enter a search term");
-            if(userValue===""){
-              showPopup("Start typing and hit Enter to search Wikipedia.")
-              resultsContainer.textContent=""
-              // spinnerE1.classList.toggle("d-none")
+            const query = searchInput.value.trim();
+            if (query === "") {
+              showPopup("Start typing and hit Enter to search Wikipedia.");
+              resultsContainer.textContent = "";
               spinnerE1.classList.add("d-none");
+              return;
             }
-            else{
+        
             currentQuery = query;
-            nextPageToken = ''; // reset token
-            // document.getElementById("result").innerHTML = "Loading...";
+            nextPageToken = '';
             searchVideo(query, true);
-            // if (isNewSearch) {
-            //   page = 1; // Reset page on new search
-            //   resultsContainer.innerHTML = ""; // Clear only on new search
-            //   if (showMore) {
-            //     showMore.remove();
-            //     showMore = null;
-            //   }
-            // }
           }
-      
+        
           function loadMore() {
-            searchVideo(currentQuery, false);
+            const spinner = showMore.querySelector('.btn-spinner');
+            const text = showMore.querySelector('.btn-text');
+        
+            text.textContent = "Loading...";
+            spinner.classList.remove("d-none");
+        
+            searchVideo(currentQuery, false).then(() => {
+              text.textContent = "View More";
+              spinner.classList.add("d-none");
+            });
           }
-      
+        
           function searchVideo(query, isNewSearch = false) {
-            const url = new URL('https://www.googleapis.com/youtube/v3/search');
-            url.searchParams.set('part', 'snippet');
-            url.searchParams.set('type', 'video');
-            url.searchParams.set('maxResults', '10');
-            url.searchParams.set('q', query);
-            url.searchParams.set('key', apiKey);
-            if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
-
-             spinnerE1.classList.remove("d-none");
-
-            fetch(url.toString())
-              .then(res => res.json())
-              .then(data => {
-                spinnerE1.classList.add("d-none")
-                const results = data.items;
-                nextPageToken = data.nextPageToken || '';
-                // const showMoreBtn = document.getElementById("showMoreBtn");
-                if (isNewSearch) {
-                  page = 1; // Reset page on new search
-                  resultsContainer.innerHTML = ""; // Clear only on new search
-                  if (showMore) {
-                    showMore.remove();
-                    showMore = null;
-                  }
-                }
-                if (results.length) {
-                  let html = '';
-                  results.forEach(video => {
-                    const videoId = video.id.videoId;
-                    const title = video.snippet.title;
-                    const description = video.snippet.description;
-                    const url = `https://www.youtube.com/watch?v=${videoId}`;
-      
-                    html += `
-                      <div class="video-card">
-                      
-                        <div class ="frame11">
-                        <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height ="100px" class = "more"></iframe>
-                       
-                        <a href="${url}" target="_blank" class="titleE1" id="linkMan">${title}</a>
-                        </div>
-                       <hr />
-                        <p class = "para11">${description}</p>
-                      </div>
-                    `;
-                //     let twoDivContainer = document.createElement('div')
-                // twoDivContainer.classList.add("two-container")
-
-                // let imgBox = document.createElement('div');
-                // imgBox.classList.add("sectionA")
-                // let img = document.createElement('img');
-                // img.classList.add("image-photo")
-                // img.src = result.urls.small;
-                // // img.href="links.self"
-                // img.addEventListener("click", () => {
-                //   const wikiSearch = encodeURIComponent(searchKeyword);
-                //   const wikiUrl = `https://en.wikipedia.org/wiki/${wikiSearch}`;
-                //   window.open(wikiUrl, '_blank'); // open in new tab
-                // });
-                // imgBox.appendChild(img);
-                // twoDivContainer.append(imgBox)
-                // resultsContainer.appendChild(twoDivContainer);
-                  });
-      
+            return new Promise((resolve, reject) => {
+              const url = new URL('https://www.googleapis.com/youtube/v3/search');
+              url.searchParams.set('part', 'snippet');
+              url.searchParams.set('type', 'video');
+              url.searchParams.set('maxResults', '10');
+              url.searchParams.set('q', query);
+              url.searchParams.set('key', apiKey);
+              if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+        
+              spinnerE1.classList.remove("d-none");
+        
+              fetch(url.toString())
+                .then(res => res.json())
+                .then(data => {
+                  spinnerE1.classList.add("d-none");
+                  const results = data.items;
+                  nextPageToken = data.nextPageToken || '';
+        
                   if (isNewSearch) {
-                    resultsContainer.innerHTML = html;
-                  } else {
-                   resultsContainer.insertAdjacentHTML('beforeend', html);
+                    page = 1;
+                    resultsContainer.innerHTML = "";
+                    if (showMore) {
+                      showMore.remove();
+                      showMore = null;
+                    }
                   }
-                  if (!showMore) {
-                    let assumeShow = document.createElement('div')
-                    assumeShow.classList.add("assume-show")
-                    
-                    showMore = document.createElement('button');
-                    showMore.textContent = "View More";
-                    showMore.classList.add("showE1");
-                    showMore.style.display = "block";
-                    assumeShow.append(showMore)
-                    imageSectionE1.append(assumeShow)
-                    // console.log(imageSection)
-                    document.body.appendChild(imageSectionE1);
-            
-                      showMore.addEventListener("click", () => {
-                      page++;
-                      loadMore() // Load next page
+        
+                  if (results.length) {
+                    let html = '';
+                    results.forEach(video => {
+                      const videoId = video.id.videoId;
+                      const titleE1 = video.snippet.title.split("#")[0].trim();
+                      const date = new Date(video.snippet.publishedAt).toLocaleDateString('en-CA', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric'
+                      });
+                      const description = video.snippet.description;
+                      const url = `https://www.youtube.com/watch?v=${videoId}`;
+        
+                      html += `
+                        <div class="video-card">
+                          <div class="frame11">
+                            <iframe src="https://www.youtube.com/embed/${videoId}" width="175px" height="100px" class="more attract"></iframe>
+                            <a href="${url}" target="_blank" class="titleE1" id="linkMan">${titleE1}</a>
+                          </div>
+                          <div class="date">
+                            <p class="datePara">Published on ${date}</p>
+                          </div>
+                          <hr />
+                          ${
+                            description
+                              ? `<p class="para11">${description}</p>`
+                              : `<p class="para11" style="text-align: center; font-weight: bold;">Oops Unable to fetch data !</p>`
+                          }
+                        </div>
+                      `;
                     });
+        
+                    if (isNewSearch) {
+                      resultsContainer.innerHTML = html;
+                    } else {
+                      resultsContainer.insertAdjacentHTML('beforeend', html);
+                    }
+        
+                    if (!showMore) {
+                      const assumeShow = document.createElement('div');
+                      assumeShow.classList.add("assume-show");
+        
+                      showMore = document.createElement('button');
+                      showMore.classList.add("showE1");
+                      showMore.style.display = "block";
+                      showMore.innerHTML = `
+                        <span class="btn-text">View More</span>
+                        <span class="btn-spinner d-none"></span>
+                      `;
+        
+                      assumeShow.append(showMore);
+                      imageSectionE1.append(assumeShow);
+                      document.body.append(imageSectionE1)
+                      showMore.addEventListener("click", loadMore);
+                    }
+                  } else {
+                    resultsContainer.innerHTML = "No results found.";
+                    if (showMore) showMore.style.display = 'none';
                   }
-      
-                  // showMoreBtn.style.display = nextPageToken ? 'inline-block' : 'none';
-                } else {
-                  resultsContainer.innerHTML = "No results found.";
-                  showMore.style.display = 'none';
-                }
-              })
-              .catch(err => {
-                console.error("Error:", err);
-                resultsContainer.innerHTML = "Error fetching video.";
-                spinnerE1.classList.add("d-none");
-              });
+        
+                  resolve();
+                })
+                .catch(err => {
+                  console.error("Error:", err);
+                  resultsContainer.innerHTML = "Error fetching video.";
+                  spinnerE1.classList.add("d-none");
+                  reject(err);
+                });
+            });
           }
+        
+          startSearch();
         }
-        startSearch()
-
-        }
+        
  
+        // else if (id === 'fourMan') {
+        //   // 5ed2a146561f4906ed6015debde2260a
+        //   resultsContainer.classList.add("one");
+        //   resultsContainer.classList.remove("myImage", "myVideo");
+        //   resultsContainer.classList.add("myNews");
+        
+        //   imageSectionE2.style.display = "block";
+        //   imageSectionE1.style.display = "none";
+        //   imageSection.style.display = "none";
+        //   resultsContainer.textContent = "";
+
+        //   let focus = document.getElementById('coolAnoop')
+        //   focus.innerHTML=""
+        //   imageSectionE2.innerHTML=""
+          
+        //   const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+        //   let nextPageToken = '';
+        //   let currentQuery = '';
+        
+        //   function startSearch() {
+        //     userValue = searchInput.value;
+        //     const query = userValue;
+        
+        //     if (userValue === "") {
+        //       showPopup("Start typing and hit enter to search for news!");
+        //       resultsContainer.textContent = "";
+        //       spinnerE1.classList.add("d-none"); 
+        //       return;
+        //     }
+        
+        //     currentQuery = query;
+    
+        //     nextPageToken = '';
+        //     searchVideo(query, true); 
+        //   }
+        
+        //   function loadMore() {
+        //     searchVideo(currentQuery, false); 
+        //   }
+        
+        //   function searchVideo(query, isNewSearch = false) {
+        //     const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&token=${apiKey}&lang=en`);
+        //     if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+        
+        //     spinnerE1.classList.remove("d-none"); 
+        
+        //     fetch(url.toString())
+        //       .then(res => res.json())
+        //       .then(data => {
+        //         const results = data.articles;
+        //         console.log(results)
+        //         nextPageToken = data.nextPageToken || '';
+        
+        //         if (isNewSearch) {
+        //           page = 1;
+        //           resultsContainer.innerHTML = "";
+        //           if (showMore) {
+        //             showMore.remove();
+        //             showMore = null;
+        //           }
+        //         }
+        
+        //         if (results.length>1) {
+        //           let html = '';
+        //           results.forEach(article => {
+        //             const title = article.title;
+        //             const description = article.description;
+        //             const urlE1 = article.url;
+        //             const imageHi = article.image;
+                    
+        //             html += `
+        //               <div class="news-card">
+        //                 <div class="news-frame">
+        //                 <div class = "hidden">
+        //                   <img src="${imageHi}" class="news-img" alt="No Image"
+        //                   onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+        //                   </div>
+        //                   <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+        //                 </div>
+        //                 <hr />
+        //                 <p class="news-para11">${description}</p>
+        //                 <div class="buttonE1">
+        //                 <a href="${urlE1}" target="_blank">
+        //                 <button class = "b1">Read more</button>
+        //                 </a>
+        //                 </div>
+        //               </div>
+        //             `;
+        //           });
+        
+        //           if (isNewSearch) {
+        //             resultsContainer.innerHTML = html;
+        //           } else {
+        //             resultsContainer.insertAdjacentHTML('beforeend', html);
+        //           }
+        
+        //           if (!showMore) {
+        //             spinnerE1.classList.add("d-none"); 
+
+        //             let assumeShow = document.createElement('div');
+        //             assumeShow.classList.add("assume-show");
+        
+        //             showMore = document.createElement('button');
+        //             showMore.textContent = "View More";
+        //             showMore.classList.add("showE11");
+        //             showMore.style.display = "block";
+        //             assumeShow.append(showMore);
+        
+        //             imageSectionE2.append(assumeShow);
+        //             document.body.appendChild(imageSectionE2);
+        
+        //             showMore.addEventListener("click", () => {
+        //               // page++;
+        //               loadMore();
+        //             });
+        //           }
+        //         } else {
+        //           showPopup("No Result found on news try to enter again !");
+        //           resultsContainer.textContent = "";
+        //           if (showMore) showMore.style.display = 'none';
+        //         }
+        //       })
+        //       .catch(err => {
+        //         console.error("Error:", err);
+        //         resultsContainer.innerHTML = "Error fetching news.";
+        //       })
+        //       .finally(() => {
+        //         spinnerE1.classList.add("d-none"); 
+        //       });
+        //   }
+        
+        //   startSearch();
+        // }
+
         else if (id === 'fourMan') {
           resultsContainer.classList.add("one");
           resultsContainer.classList.remove("myImage", "myVideo");
@@ -1215,50 +1603,53 @@ fetch(url, options)
           imageSectionE1.style.display = "none";
           imageSection.style.display = "none";
           resultsContainer.textContent = "";
-
-          let focus = document.getElementById('coolAnoop')
-          focus.innerHTML=""
-          imageSectionE2.innerHTML=""
-          
-          const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
-          let nextPageToken = '';
+        
+          let focus = document.getElementById('coolAnoop');
+          focus.innerHTML = "";
+          imageSectionE2.innerHTML = "";
+        
+          // const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
           let currentQuery = '';
+          let page = 1;
+          let showMore = null;
         
           function startSearch() {
-            userValue = searchInput.value;
-            const query = userValue;
-        
-            if (userValue === "") {
+            const query = searchInput.value.trim();
+            if (query === "") {
               showPopup("Start typing and hit enter to search for news!");
               resultsContainer.textContent = "";
-              spinnerE1.classList.add("d-none"); 
+              spinnerE1.classList.add("d-none");
               return;
             }
         
             currentQuery = query;
-            nextPageToken = '';
-            searchVideo(query, true); 
+            page = 1;
+            searchNews(query, true);
           }
         
           function loadMore() {
-            searchVideo(currentQuery, false); 
+            page++;
+            searchNews(currentQuery, false);
           }
         
-          function searchVideo(query, isNewSearch = false) {
-            const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(query)}&token=${apiKey}&lang=en`);
-            if (nextPageToken) url.searchParams.set('pageToken', nextPageToken);
+          function searchNews(query, isNewSearch = false) {
+            // here changed url and set up for the button on the Nes APi as per requirement of view more button
+            // const url = new URL(`https://gnews.io/api/v4/search`);
+            const url = new URL(`https://newsapi.org/v2/everything?q=${query}&from=2025-03-13&sortBy=publishedAt&apiKey=2af44fa03ff24e23b902485dd7e69aac`)
+            url.searchParams.set('q', query);
+            url.searchParams.set('token', apiKey);
+            url.searchParams.set('lang', 'en');
+            url.searchParams.set('page', page.toString());
         
-            spinnerE1.classList.remove("d-none"); 
+            spinnerE1.classList.remove("d-none");
         
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
                 const results = data.articles;
-                console.log(results)
-                nextPageToken = data.nextPageToken || '';
+                console.log(results);
         
                 if (isNewSearch) {
-                  page = 1;
                   resultsContainer.innerHTML = "";
                   if (showMore) {
                     showMore.remove();
@@ -1266,63 +1657,56 @@ fetch(url, options)
                   }
                 }
         
-                if (results.length>1) {
+                if (results && results.length > 0) {
                   let html = '';
                   results.forEach(article => {
                     const title = article.title;
                     const description = article.description;
                     const urlE1 = article.url;
-                    const imageHi = article.image;
-                    
+                    // const imageHi = article.image;
+                    const imageHi = article.urlToImage;
                     html += `
                       <div class="news-card">
                         <div class="news-frame">
-                        <div class = "hidden">
-                          <img src="${imageHi}" class="news-img" alt="No Image"
-                          onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                          <div class="hidden">
+                            <img src="${imageHi}" class="news-img" alt="No Image"
+                              onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
                           </div>
                           <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
                         </div>
                         <hr />
                         <p class="news-para11">${description}</p>
                         <div class="buttonE1">
-                        <a href="${urlE1}" target="_blank">
-                        <button class = "b1">Read more</button>
-                        </a>
+                          <a href="${urlE1}" target="_blank">
+                            <button class="b1">Read more</button>
+                          </a>
                         </div>
                       </div>
                     `;
                   });
         
-                  if (isNewSearch) {
-                    resultsContainer.innerHTML = html;
-                  } else {
-                    resultsContainer.insertAdjacentHTML('beforeend', html);
-                  }
+                  resultsContainer.insertAdjacentHTML('beforeend', html);
         
                   if (!showMore) {
-                    spinnerE1.classList.add("d-none"); 
-
-                    let assumeShow = document.createElement('div');
+                    const assumeShow = document.createElement('div');
                     assumeShow.classList.add("assume-show");
         
                     showMore = document.createElement('button');
                     showMore.textContent = "View More";
                     showMore.classList.add("showE11");
                     showMore.style.display = "block";
-                    assumeShow.append(showMore);
         
+                    assumeShow.append(showMore);
                     imageSectionE2.append(assumeShow);
                     document.body.appendChild(imageSectionE2);
         
-                    showMore.addEventListener("click", () => {
-                      // page++;
-                      loadMore();
-                    });
+                    showMore.addEventListener("click", loadMore);
                   }
                 } else {
-                  showPopup("No Result found on news try to enter again !");
-                  resultsContainer.textContent = "";
+                  if (isNewSearch) {
+                    showPopup("No news found. Try another keyword.");
+                    resultsContainer.textContent = "";
+                  }
                   if (showMore) showMore.style.display = 'none';
                 }
               })
@@ -1331,12 +1715,16 @@ fetch(url, options)
                 resultsContainer.innerHTML = "Error fetching news.";
               })
               .finally(() => {
-                spinnerE1.classList.add("d-none"); 
+                spinnerE1.classList.add("d-none");
               });
           }
         
           startSearch();
         }
+
+    
+      
+        
         
         
     });
