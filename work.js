@@ -104,9 +104,15 @@ function setActiveE1() {
   btn3.classList.remove('active')
   btn4.classList.remove('active')
 }
+let allMixConatainer = document.createElement('div')
+allMixConatainer.classList.add('all-mix')
+
 
 let mainDiv = document.createElement('div')
 mainDiv.classList.add("search-class")
+
+let headings = document.createElement('div')
+headings.id="headLegend"
 
 let searchInput = document.createElement('input')
 searchInput.id="searchMan"
@@ -114,7 +120,7 @@ searchInput.classList.add("search-input-class")
 searchInput.type="search"
 searchInput.placeholder="Enter to search ?"
 mainDiv.append(searchInput)
-document.body.append(mainDiv)
+// document.body.append(mainDiv)
 
 
 let fragmentsContainer = document.createElement('div')
@@ -187,7 +193,9 @@ oneDivE3.append(iconSymbolE3,mergeIconE3)
 
 displayIcons.append(oneDiv,oneDivE1,oneDivE2,oneDivE3)
 fragmentsContainer.append(displayIcons)
-document.body.append(fragmentsContainer)
+allMixConatainer.append(headings,mainDiv,fragmentsContainer)
+document.body.append(allMixConatainer)
+// document.body.append(fragmentsContainer)
 
 let man = document.getElementById('searchMan')
 console.log(man)
@@ -233,7 +241,7 @@ function searchVideo( isNewSearch = false) {
           imageSectionE2.innerHTML=""
       const results = data.articles;
       console.log(results)
-      nextPageToken = data.nextPageToken || '';
+      window.nextPageToken = data.nextPageToken || '';
 
       if (isNewSearch) {
         resultsContainer.innerHTML = "";
@@ -304,7 +312,14 @@ function searchVideo( isNewSearch = false) {
     })
     .catch(err => {
       console.error("Error:", err);
-      resultsContainer.innerHTML = "Error fetching news.";
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached</h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
     })
     .finally(() => {
       spinnerE1.classList.add("d-none"); 
@@ -928,3 +943,395 @@ fetch(url, options)
         }        
     });
   });
+  // const headLegend = document.getElementById(headLegend)
+
+window.addEventListener('scroll', function() {
+  const allMix = document.querySelector('.all-mix');
+  const headLegend = document.getElementById('headLegend')
+  const searchClass = document.querySelector('.search-class');
+  const stickyTop = allMix.getBoundingClientRect().top;
+  const searchinputclass = document.querySelector('.search-input-class') 
+  if (stickyTop <= 0) {
+     allMix.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
+    searchClass.style.paddingTop="5px"
+    searchinputclass.style.borderRadius="50px"
+    searchinputclass.style.border ='1px solid black';
+    searchinputclass.style.outline="none"
+    headLegend.style.display="block"
+    headLegend.innerHTML=`
+    <div class ="basic">
+    <div class ="n-basic" id="categoryOne">Sports</div>
+    <div class ="n-basic" id="categoryTwo">Technology</div>
+    <div class ="n-basic" id="categoryThree">Business</div>
+    <div class ="n-basic" id="categoryFour">World</div>
+    </div>`
+    
+    
+  } else{
+    searchClass.style.marginTop = '0px';
+    allMix.style.boxShadow = 'none';
+    searchinputclass.style.borderRadius="5px"
+    searchClass.style.paddingTop="0px"
+    headLegend.style.display="none"
+  }
+})
+headLegend.addEventListener("click", function (e) {
+  if (e.target && e.target.id === "categoryOne") {
+    console.log("Clicked Item 1 via delegation");
+
+    // Reset and style the results container
+    resultsContainer.innerHTML = "";
+    resultsContainer.classList.add("one", "myNews");
+    resultsContainer.classList.remove("myImage", "myVideo");
+
+    // Toggle section visibility
+    imageSectionE2.style.display = "block";
+    imageSectionE1.style.display = "none";
+    imageSection.style.display = "none";
+
+    // Clear other elements
+    document.getElementById("coolAnoop").innerHTML = "";
+    imageSectionE2.innerHTML = "";
+
+    // API call for sports category
+    const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+    const category = "sports";
+    const lang = "en";
+    setActiveE1()
+
+    function fetchSportsNews() {
+      const url = new URL("https://gnews.io/api/v4/top-headlines");
+      url.searchParams.set("token", apiKey);
+      url.searchParams.set("lang", lang);
+      url.searchParams.set("topic", category);
+
+      spinnerE1.classList.remove("d-none");
+
+      fetch(url.toString())
+        .then(res => res.json())
+        .then(data => {
+          const results = data.articles;
+          console.log(results);
+
+          if (results && results.length > 0) {
+            let html = '';
+            results.forEach(article => {
+              const { title, description, url: urlE1, image: imageHi } = article;
+              html += `
+                <div class="news-card">
+                  <div class="news-frame">
+                    <div class="hidden">
+                      <img src="${imageHi}" class="news-img" alt="No Image"
+                        onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                    </div>
+                    <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+                  </div>
+                  <hr />
+                  <p class="news-para11">${description}</p>
+                  <div class="buttonE1">
+                    <a href="${urlE1}" target="_blank">
+                      <button class="b1">Read more</button>
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+
+            resultsContainer.insertAdjacentHTML('beforeend', html);
+          } else {
+            showPopup("No sports news found. Try again later.");
+          }
+        })
+        .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached Sports</h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
+    })
+        .finally(() => {
+          spinnerE1.classList.add("d-none");
+        });
+    }
+
+    fetchSportsNews(); 
+  }
+});
+
+headLegend.addEventListener("click", function (e) {
+  if (e.target && e.target.id === "categoryTwo") {
+    console.log("Clicked Item 1 via delegation");
+
+    // Reset and style the results container
+    resultsContainer.innerHTML = "";
+    resultsContainer.classList.add("one", "myNews");
+    resultsContainer.classList.remove("myImage", "myVideo");
+
+    // Toggle section visibility
+    imageSectionE2.style.display = "block";
+    imageSectionE1.style.display = "none";
+    imageSection.style.display = "none";
+
+    // Clear other elements
+    document.getElementById("coolAnoop").innerHTML = "";
+    imageSectionE2.innerHTML = "";
+
+    // API call for sports category
+    const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+    const category = "technology";
+    const lang = "en";
+    setActiveE1()
+
+    function fetchSportsNews() {
+      const url = new URL("https://gnews.io/api/v4/top-headlines");
+      url.searchParams.set("token", apiKey);
+      url.searchParams.set("lang", lang);
+      url.searchParams.set("topic", category);
+
+      spinnerE1.classList.remove("d-none");
+
+      fetch(url.toString())
+        .then(res => res.json())
+        .then(data => {
+          const results = data.articles;
+          console.log(results);
+
+          if (results && results.length > 0) {
+            let html = '';
+            results.forEach(article => {
+              const { title, description, url: urlE1, image: imageHi } = article;
+              html += `
+                <div class="news-card">
+                  <div class="news-frame">
+                    <div class="hidden">
+                      <img src="${imageHi}" class="news-img" alt="No Image"
+                        onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                    </div>
+                    <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+                  </div>
+                  <hr />
+                  <p class="news-para11">${description}</p>
+                  <div class="buttonE1">
+                    <a href="${urlE1}" target="_blank">
+                      <button class="b1">Read more</button>
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+
+            resultsContainer.insertAdjacentHTML('beforeend', html);
+          } else {
+            showPopup("No sports news found. Try again later.");
+          }
+        })
+        .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached of Technology</h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
+    })
+        .finally(() => {
+          spinnerE1.classList.add("d-none");
+        });
+    }
+
+    fetchSportsNews(); 
+  }
+});
+
+headLegend.addEventListener("click", function (e) {
+  if (e.target && e.target.id === "categoryThree") {
+    console.log("Clicked Item 1 via delegation");
+
+    // Reset and style the results container
+    resultsContainer.innerHTML = "";
+    resultsContainer.classList.add("one", "myNews");
+    resultsContainer.classList.remove("myImage", "myVideo");
+
+    // Toggle section visibility
+    imageSectionE2.style.display = "block";
+    imageSectionE1.style.display = "none";
+    imageSection.style.display = "none";
+
+    // Clear other elements
+    document.getElementById("coolAnoop").innerHTML = "";
+    imageSectionE2.innerHTML = "";
+
+    // API call for sports category
+    const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+    const category = "business";
+    const lang = "en";
+    setActiveE1()
+
+    function fetchSportsNews() {
+      const url = new URL("https://gnews.io/api/v4/top-headlines");
+      url.searchParams.set("token", apiKey);
+      url.searchParams.set("lang", lang);
+      url.searchParams.set("topic", category);
+
+      spinnerE1.classList.remove("d-none");
+
+      fetch(url.toString())
+        .then(res => res.json())
+        .then(data => {
+          const results = data.articles;
+          console.log(results);
+
+          if (results && results.length > 0) {
+            let html = '';
+            results.forEach(article => {
+              const { title, description, url: urlE1, image: imageHi } = article;
+              html += `
+                <div class="news-card">
+                  <div class="news-frame">
+                    <div class="hidden">
+                      <img src="${imageHi}" class="news-img" alt="No Image"
+                        onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                    </div>
+                    <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+                  </div>
+                  <hr />
+                  <p class="news-para11">${description}</p>
+                  <div class="buttonE1">
+                    <a href="${urlE1}" target="_blank">
+                      <button class="b1">Read more</button>
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+
+            resultsContainer.insertAdjacentHTML('beforeend', html);
+          } else {
+            showPopup("No sports news found. Try again later.");
+          }
+        })
+        .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached of Business</h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
+    })
+        .finally(() => {
+          spinnerE1.classList.add("d-none");
+        });
+    }
+
+    fetchSportsNews(); 
+  }
+});
+
+headLegend.addEventListener("click", function (e) {
+  if (e.target && e.target.id === "categoryFour") {
+    console.log("Clicked Item 1 via delegation");
+
+    // Reset and style the results container
+    resultsContainer.innerHTML = "";
+    resultsContainer.classList.add("one", "myNews");
+    resultsContainer.classList.remove("myImage", "myVideo");
+
+    // Toggle section visibility
+    imageSectionE2.style.display = "block";
+    imageSectionE1.style.display = "none";
+    imageSection.style.display = "none";
+
+    // Clear other elements
+    document.getElementById("coolAnoop").innerHTML = "";
+    imageSectionE2.innerHTML = "";
+
+    // API call for sports category
+    const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+    const category = "world";
+    const lang = "en";
+    setActiveE1()
+
+    function fetchSportsNews() {
+      const url = new URL("https://gnews.io/api/v4/top-headlines");
+      url.searchParams.set("token", apiKey);
+      url.searchParams.set("lang", lang);
+      url.searchParams.set("topic", category);
+
+      spinnerE1.classList.remove("d-none");
+
+      fetch(url.toString())
+        .then(res => res.json())
+        .then(data => {
+          const results = data.articles;
+          console.log(results);
+
+          if (results && results.length > 0) {
+            let html = '';
+            results.forEach(article => {
+              const { title, description, url: urlE1, image: imageHi } = article;
+              html += `
+                <div class="news-card">
+                  <div class="news-frame">
+                    <div class="hidden">
+                      <img src="${imageHi}" class="news-img" alt="No Image"
+                        onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+                    </div>
+                    <a href="${urlE1}" target="_blank" class="news-titleE1">${title}</a>
+                  </div>
+                  <hr />
+                  <p class="news-para11">${description}</p>
+                  <div class="buttonE1">
+                    <a href="${urlE1}" target="_blank">
+                      <button class="b1">Read more</button>
+                    </a>
+                  </div>
+                </div>
+              `;
+            });
+
+            resultsContainer.insertAdjacentHTML('beforeend', html);
+          } else {
+            showPopup("No sports news found. Try again later.");
+          }
+        })
+       .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached of World </h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
+    })
+        .finally(() => {
+          spinnerE1.classList.add("d-none");
+        });
+    }
+
+    fetchSportsNews(); 
+  }
+});
+
+
+const buttonE5 = headLegend.querySelectorAll(".n-basic");
+
+    // Add click event listeners
+    buttonE5.forEach(btn => {
+      btn.addEventListener("click", () => {
+        // Remove active class from all buttonE5
+        buttonE5.forEach(b => b.classList.remove("active"));
+        // Add active class to the clicked button
+        btn.classList.add("active");
+      });
+    });
