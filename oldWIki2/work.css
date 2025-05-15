@@ -9,11 +9,7 @@
 .sr-only{
     margin-left: 11px;
 }
-.n-basic.active-category {
-  background-color: #007bff;
-  color: white;
-  border: none;
-}
+
 .api-limit-card {
   width: 100%;
   margin-top: 150px;
@@ -98,13 +94,10 @@
   border-color: #f5bebe;
   box-shadow: 0 1px 4px rgba(245, 153, 153, 0.3);
 }
-.n-basic.active {
-  background-color: #007bff;
-  color: white;
-  border-radius: 20px;
-  padding: 6px 12px;
-  transition: 0.3s ease;
-}
+ .n-basic.active {
+      background-color: #4CAF50;
+      color: white;
+    }
 .disappear{
   display: none;
 }
@@ -1558,7 +1551,7 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
 }
 .n-basic {
   display: inline-block;
-  padding: 5px 0px;
+  padding: 10px 15px;
   margin: 0px;
   border: 1px solid #e0dcdc;
   border-radius: 20px;
