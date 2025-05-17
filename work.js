@@ -134,8 +134,6 @@ oneDiv.id="oneMan"
 oneDiv.classList.add("one-show","tab-button")
 oneDiv.addEventListener("click",function() {
   setActive(this)
-  
-  
 })
 
 let iconSymbol = document.createElement('i')
@@ -974,7 +972,7 @@ const categoryMap = {
 
 headLegend.addEventListener("click", function (e) {
   const clickedId = e.target.id;
-  
+  // setActive(e.target.id)
   if (categoryMap[clickedId]) {
     // 1. Highlight clicked button and remove highlight from others
     document.querySelectorAll('.n-basic').forEach(btn => {
@@ -982,7 +980,6 @@ headLegend.addEventListener("click", function (e) {
     });
     e.target.classList.add('active-category');
 
-    // 2. Reset containers
     resultsContainer.innerHTML = "";
     resultsContainer.classList.add("one", "myNews");
     resultsContainer.classList.remove("myImage", "myVideo");
@@ -993,14 +990,13 @@ headLegend.addEventListener("click", function (e) {
 
     document.getElementById("coolAnoop").innerHTML = "";
     imageSectionE2.innerHTML = "";
-
     // 3. Fetch news for the selected category
     // const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
     const apiKey = "d890bc5854f42bbb6fdeaf7dfa091e74"; // second Api
 
     const category = categoryMap[clickedId];
     const lang = "en";
-
+    setActiveE1()
     fetchCategoryNews(apiKey, category, lang);
   }
 });
@@ -1010,7 +1006,7 @@ function fetchCategoryNews(apiKey, category, lang) {
   url.searchParams.set("token", apiKey);
   url.searchParams.set("lang", lang);
   url.searchParams.set("topic", category);
-
+  
   spinnerE1.classList.remove("d-none");
 
   fetch(url.toString())
