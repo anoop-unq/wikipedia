@@ -941,27 +941,6 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
         margin: 21px;
         object-fit: cover;
     }
-     .basic{
-  display: grid;
-  grid-template-columns: auto auto auto auto;
-  gap: 11px; 
-  padding: 15px 5px;
-}
-.n-basic {
-  display: inline-block;
-  padding: 4px 5px;
-  margin: 0px;
-  border: 1px solid #e0dcdc;
-  border-radius: 20px;
-  background-color: #fffafa;
-  color: #333;
-  font-size: 13px;
-  font-family: 'Inter', sans-serif;
-  font-weight: 500;
-  cursor: pointer;
-  text-align: center;
-  transition: all 0.2s ease;
-}
     
 }
 @media (min-width:600px) {

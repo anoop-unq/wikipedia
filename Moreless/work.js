@@ -226,7 +226,7 @@ function searchVideo( isNewSearch = false) {
   const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(randomTopic)}&token=${apiKey}&lang=en`);
 
   spinnerE1.classList.remove("d-none"); 
-  setActiveE1()
+
   fetch(url.toString())
     .then(res => res.json())
     .then(data => {
@@ -434,18 +434,13 @@ fetch(url, options)
     let imageSection = document.getElementById('imageSection')
     let imageSectionE1 = document.getElementById('imageSectionE1')
     let imageSectionE2 = document.getElementById('imageSectionE2')
-    let allManCount = 0;
-    let clickCount = 0;
-    let videoCount = 0;
-    let newsCount = 0;
+   
     const buttons = document.querySelectorAll(".one-show");
     buttons.forEach(button => {
       button.addEventListener("click", () => {
         const id = button.id;
-        
-        
+
         if (id === 'oneMan') {
-          allManCount++;
           resultsContainer.classList.add("one")
           resultsContainer.classList.remove("myImage")
           resultsContainer.classList.remove("myVideo")
@@ -463,9 +458,6 @@ fetch(url, options)
   
           console.log("click")
           userValue = searchInput.value;
-          if(allManCount===1){
-          
-          }
           if(userValue===""){
             showPopup("Start typing and hit Enter to search Wikipedia.")
             resultsContainer.textContent=""
@@ -551,7 +543,7 @@ fetch(url, options)
         }
 
         else if (id === 'twoMan') {
-          clickCount++;
+         
           resultsContainer.classList.remove("one");
           resultsContainer.classList.add("myImage");
           resultsContainer.classList.remove("myVideo", "myNews");
@@ -559,10 +551,10 @@ fetch(url, options)
           imageSectionE1.style.display = "none";
           imageSectionE2.style.display = "none";
           imageSection.style.display = "block";
-          
+        
           let focus = document.getElementById('coolAnoop')
           focus.innerHTML=""
-          resultsContainer.innerHTML="";
+       
             
 
           const searchInputMan = document.getElementById('searchMan');
@@ -572,125 +564,12 @@ fetch(url, options)
             const userValue = searchInputMan.value.trim();
             let accessKey = "49671633-184f23eef7e7e0b0d111e40c0";
         
-          // if(clickCount===1){
-          //   if (userValue === "") {
-          //     showPopup("Start typing and hit enter to search for images!");
-          //     resultsContainer.textContent = "";
-          //     oneTime = true;
-          //     console.log(clickCount,"hi")
-          //     return;
+            if (userValue === "") {
+              showPopup("Start typing and hit enter to search for images!");
+              resultsContainer.textContent = "";
+              return;
               
-            
-          // }
-          
-          //   else{
-          //     fetchGallery(true)
-          //     console.log("hii",clockCount)
-          //   }
-          // }
-
-          if(clickCount===1){
-            fetchGallery(true)
-              console.log("hii",clickCount)
-          }
-          else{
-            if(userValue===""){
-             showPopup("Start typing and hit enter to search for images!");
-              resultsContainer.innerHTML = "";
-              oneTime = true;
-              console.log(clickCount,"hi")
-              let meAnoop = document.getElementById('meAnoop')
-              meAnoop.style.display="none";
-              return; 
             }
-          }
-
-           
-
-            async function fetchGallery(isInitialLoad) {
-  const searchTerms = ["architecture", "temples", "space", "wildlife", "sunset"];
-  const keyword = searchTerms[Math.floor(Math.random() * searchTerms.length)];
-
-  if (isInitialLoad) {
-    currentPage = 1;
-    galleryContainer.innerHTML = "";
-    if (viewMoreButton) {
-      viewMoreButton.remove();
-      viewMoreButton = null;
-    }
-  }
-
-  loadingSpinner.classList.remove("d-none");
-
-  const apiUrl = `https://pixabay.com/api/?page=${currentPage}&key=${accessKey}&q=${encodeURIComponent(keyword)}&image_type=photo&safesearch=true`;
-
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const imageList = data.hits;
-
-    if (imageList.length === 0 && currentPage === 1) {
-      showAlert("No images found. Try a different topic.");
-      galleryContainer.textContent = "";
-      return;
-    }
-
-    imageList.forEach(item => {
-      const wikiKeyword = item.tags || "architecture";
-
-      const wrapper = document.createElement('div');
-      wrapper.classList.add("image-wrapper");
-
-      const imageBox = document.createElement('div');
-      imageBox.classList.add("image-box");
-
-      const imgElement = document.createElement('img');
-      imgElement.classList.add("gallery-image");
-      imgElement.src = item.webformatURL;
-
-      imgElement.addEventListener("click", () => {
-        const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(wikiKeyword)}`;
-        window.open(wikiLink, '_blank');
-      });
-
-      imageBox.appendChild(imgElement);
-      wrapper.append(imageBox);
-      galleryContainer.appendChild(wrapper);
-    });
-
-    if (!viewMoreButton) {
-      const btnContainer = document.createElement('div');
-      btnContainer.classList.add("btn-wrapper");
-
-      viewMoreButton = document.createElement('button');
-      viewMoreButton.textContent = "View More";
-      viewMoreButton.classList.add("load-more-btn");
-
-      btnContainer.append(viewMoreButton);
-      imageSection.append(btnContainer);
-      document.body.appendChild(imageSection);
-
-      viewMoreButton.addEventListener("click", () => {
-        currentPage++;
-        fetchGallery(false);
-      });
-    }
-
-  } catch (err) {
-    console.error("Image fetch failed:", err);
-    showAlert("Something went wrong. Please try again.");
-  } finally {
-    loadingSpinner.classList.add("d-none");
-  }
-}
-
-// Initialize values
-let currentPage = 1;
-let viewMoreButton = null;
-
-// Call once to load on page load
-fetchGallery(true);
-
         
             if (isNewSearch) {
               page = 1;
@@ -749,7 +628,6 @@ fetchGallery(true);
         
                 showMore = document.createElement('button');
                 showMore.textContent = "View More";
-                showMore.id="meAnoop"
                 showMore.classList.add("showE1");
                 showMore.style.display = "block";
         
@@ -777,9 +655,8 @@ fetchGallery(true);
 
           
         }
-
+        
         else if (id === 'thirdMan') {
-          videoCount++;
           resultsContainer.classList.add("one");
           resultsContainer.classList.remove("myImage", "myNews");
           resultsContainer.classList.add("myVideo");
@@ -799,26 +676,11 @@ fetchGallery(true);
         
           function startSearch() {
             const query = searchInput.value.trim();
-            // if (query === "") {
-            //   showPopup("Start typing and hit Enter to search Wikipedia.");
-            //   resultsContainer.textContent = "";
-            //   spinnerE1.classList.add("d-none");
-            //   return;
-            // }
-
-            if(videoCount===1){
-              // showVideo()
-              console.log("cl")
-              console.log(videoCount)
-              searchVideo("Cricket")
-            }
-            else {
-              if(query===""){
-                showPopup("Start typing and hit Enter to search Wikipedia.");
-              resultsContainer.innerHTML = "";
+            if (query === "") {
+              showPopup("Start typing and hit Enter to search Wikipedia.");
+              resultsContainer.textContent = "";
               spinnerE1.classList.add("d-none");
               return;
-              }
             }
         
             currentQuery = query;
@@ -923,7 +785,7 @@ fetchGallery(true);
                       showMore.addEventListener("click", loadMore);
                     }
                   } else {
-                    resultsContainer.innerHTML = "";
+                    resultsContainer.innerHTML = "No results found.";
                     if (showMore) showMore.style.display = 'none';
                   }
         
@@ -942,7 +804,6 @@ fetchGallery(true);
         }
         
         else if (id === 'fourMan') {
-          newsCount++;
           resultsContainer.classList.add("one");
           resultsContainer.classList.remove("myImage", "myVideo");
           resultsContainer.classList.add("myNews");
@@ -963,18 +824,12 @@ fetchGallery(true);
         
           function startSearch() {
             const query = searchInput.value.trim();
-
-            if(newsCount===1){
-              searchNews("India")
-            }
-            else{
             if (query === "") {
               showPopup("Start typing and hit enter to search for news!");
               resultsContainer.textContent = "";
               spinnerE1.classList.add("d-none");
               return;
             }
-          }
         
             currentQuery = query;
             page = 1;
@@ -1011,7 +866,7 @@ fetchGallery(true);
                   }
                 }
         
-                if (results && results.length > 1) {
+                if (results && results.length > 0) {
                   let html = '';
                   results.forEach(article => {
                     const title = article.title;
