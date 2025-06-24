@@ -248,7 +248,7 @@
 }
 
 .display-items{
-    margin-top: 15px;
+    margin-top: 15px;  /* from top to container like All image section  */
 }
 /* .show{
     display: none;
@@ -426,7 +426,6 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
     background-color: rgb(255, 255, 255);
     box-shadow: 10px 1px 5px 0.25px rgb(212, 212, 214);
     border: none;
-    /* overflow-x: hidden; */
 }
 
 .display-icon{
@@ -448,7 +447,7 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
 .one-show:hover .merged{
     color: blue;
     transition: 0.5s ease-in-out;
-}
+} /* for the two icons and text hover effect */
 .sameE1{
     font-size: 15px;
     font-weight: 750;
@@ -542,7 +541,7 @@ https://static.vecteezy.com/system/resources/previews/033/530/781/large_2x/upset
 
   .tab-button.active::after {
     background: #007bff;
-  }
+  } /* for underline we take pseudo effect for all 4 fragments like ALL Images */
   .none{
     display: none!important;
   }

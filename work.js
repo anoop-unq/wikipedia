@@ -1,4 +1,4 @@
-let coolAnoop= document.getElementById('coolAnoop')
+let coolAnoop= document.getElementById('coolAnoop') // Inner element to clear the pop ups !
 function showPopup(message) {
   let popupE1 = document.createElement('div');
   popupE1.classList.add('popupE1');
@@ -84,18 +84,18 @@ function showPopupE1(message) {
   },100)
 }
 
+// for separate buttons fucntionallity setActive()
+
 function setActive(button) {
   const buttons = document.querySelectorAll('.tab-button');
   buttons.forEach(btn => btn.classList.remove('active'));
   button.classList.add('active');
-  console.log("hii")
 }
+// for only one [single] All button fucntionallity setActiveE1()
 
 function setActiveE1() {
   const buttons = document.getElementById('oneMan');
-  // buttons.classList.remove('active');
   buttons.classList.add('active');
-  console.log("hii")
   const btn2 = document.getElementById('twoMan')
   const btn3 = document.getElementById('thirdMan')
   const btn4 = document.getElementById('fourMan')
@@ -113,6 +113,7 @@ mainDiv.classList.add("search-class")
 
 let headings = document.createElement('div')
 headings.id="headLegend"
+// this id is for top 4 API
 
 let searchInput = document.createElement('input')
 searchInput.id="searchMan"
@@ -120,8 +121,6 @@ searchInput.classList.add("search-input-class")
 searchInput.type="search"
 searchInput.placeholder="Enter to search ?"
 mainDiv.append(searchInput)
-// document.body.append(mainDiv)
-
 
 let fragmentsContainer = document.createElement('div')
 fragmentsContainer.classList.add("fragments")
@@ -149,8 +148,8 @@ oneDivE1.classList.add("one-show","tab-button")
 oneDivE1.id="twoMan"
 oneDivE1.addEventListener("click",function() {
 setActive(this)
- let ke = document.getElementById('coolAnoop');
- ke.style.display="block"
+//  let ke = document.getElementById('coolAnoop');
+//  ke.style.display="block"
 })
 let iconSymbolE1 = document.createElement('i')
 iconSymbolE1.classList.add("fa-solid","fa-image","sameE1")
@@ -193,10 +192,9 @@ displayIcons.append(oneDiv,oneDivE1,oneDivE2,oneDivE3)
 fragmentsContainer.append(displayIcons)
 allMixConatainer.append(headings,mainDiv,fragmentsContainer)
 document.body.append(allMixConatainer)
-// document.body.append(fragmentsContainer)
 
 let man = document.getElementById('searchMan')
-console.log(man)
+console.log(man) // access id from serarch input
 
 let spinnerE1 = document.getElementById('spinner');
 spinnerE1.classList.add("spinner")
@@ -207,12 +205,17 @@ resultsContainer.id = "results";
 resultsContainer.classList.add("display-items","one","myImage","myVideo","myNews")
 document.body.append(resultsContainer);
 
+
+    let imageSection = document.getElementById('imageSection')
+    let imageSectionE1 = document.getElementById('imageSectionE1')
+    let imageSectionE2 = document.getElementById('imageSectionE2')
+
 // const apiKey = "5ed2a146561f4906ed6015debde2260a";
-// const apiKey = "58cca065177e920f5ebcddc3061d8586"
-const apiKey = "b7716e563019c757f88b83a5efa71c5e"
+
+const apiKey = "58cca065177e920f5ebcddc3061d8586"
+// const apiKey = "b7716e563019c757f88b83a5efa71c5e"
 let showMore = null;
   searchVideo( true); 
-
 
 function loadMore() {
   searchVideo( false); 
@@ -220,26 +223,30 @@ function loadMore() {
 
 function searchVideo( isNewSearch = false) {
 
-  const topics = ["Tollywood","Movies","Indian news","sports","cricket","Indian politics","Hindu"];
+  const topics = ["Tollywood","Movies","Indian news","sports","cricket","Indian politics","Hindu","World","Business","Science","Health","Entertainment","Technology"];
   const randomTopic = topics[Math.floor(Math.random() * topics.length)];
-
+  //  Why use encodeURIComponent()?
+// Because if the topic contains characters like:
+// spaces &, ?, =, /, etc. they could break the URL or confuse it.
   const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(randomTopic)}&token=${apiKey}&lang=en`);
-
+  // new URL its an Js constructor creates object it
+  // easily handle modift, or fetch data from URL's
   spinnerE1.classList.remove("d-none"); 
   setActiveE1()
+  // if you check type of URL its an object
   fetch(url.toString())
     .then(res => res.json())
     .then(data => {
           resultsContainer.classList.add("one");
           resultsContainer.classList.remove("myImage", "myVideo");
           resultsContainer.classList.add("myNews");
-          console.log(data)
           let focus = document.getElementById('coolAnoop')
           focus.innerHTML="" 
-          imageSectionE2.innerHTML=""
-      const results = data.articles;
-      console.log(results)
-      window.nextPageToken = data.nextPageToken || '';
+          // imageSectionE2.innerHTML=""
+          // you can stop up to 10 pages
+          const results = data.articles;
+          console.log(results)
+          window.nextPageToken = data.nextPageToken || '';
 
       if (isNewSearch) {
         resultsContainer.innerHTML = "";
@@ -254,7 +261,7 @@ function searchVideo( isNewSearch = false) {
         results.forEach(article => {
           const title = article.title;
           const trimmedTitle = title.split(' ').slice(0,4).join(' ');
-          const description = article.description;
+          const description = article.description.split(' ').slice(0,25).join(' ');
           const urlE1 = article.url;
           const imageHi = article.image;
           
@@ -275,6 +282,7 @@ function searchVideo( isNewSearch = false) {
               </div>
             </div>`
           ;
+          // html template
         });
 
         if (isNewSearch) {
@@ -322,9 +330,127 @@ function searchVideo( isNewSearch = false) {
     .finally(() => {
       spinnerE1.classList.add("d-none"); 
     });
+}   
+
+let showButton = null;
+// this for the All button setup !
+function searchVideoE1( isNewSearch = false) {
+ 
+  const topics = ["Tollywood","Movies","Indian news","sports","cricket","Indian politics","Hindu","World","Business","Science","Health","Entertainment","Technology"];
+  const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+  //  Why use encodeURIComponent()?
+// Because if the topic contains characters like:
+// spaces &, ?, =, /, etc. they could break the URL or confuse it.
+  const url = new URL(`https://gnews.io/api/v4/search?q=${encodeURIComponent(randomTopic)}&token=${apiKey}&lang=en`);
+  // new URL its an Js constructor creates object it
+  // easily handle modift, or fetch data from URL's
+  resultsContainer.innerHTML=""
+  spinnerE1.classList.remove("d-none"); 
+  setActiveE1()
+  fetch(url.toString())
+    .then(res => res.json())
+    .then(data => {
+      resultsContainer.innerHTML=""
+          resultsContainer.classList.add("one");
+          resultsContainer.classList.remove("myImage", "myVideo");
+          resultsContainer.classList.add("myNews");
+          let focus = document.getElementById('coolAnoop')
+          focus.innerHTML="" 
+          // you can stop up to 10 pages
+          const results = data.articles;
+          console.log(results)
+          window.nextPageToken = data.nextPageToken || '';
+
+      if (isNewSearch) {
+        // resultsContainer.innerHTML = "";
+        if (showButton) {
+          // showButton.remove();
+          // showButton = null;
+          imageSectionE2.style.display="block"
+          console.log(imageSectionE2,"JIiki")
+          console.log("Hiii mama")
+          console.log(showButton,"Button !")
+        }
+      }
+
+      if (results.length>1) {
+        let html = '';
+        results.forEach(article => {
+          const title = article.title;
+          const trimmedTitle = title.split(' ').slice(0,4).join(' ');
+          const description = article.description;
+          const urlE1 = article.url;
+          const imageHi = article.image;
+          
+          html += `
+          <div class = "majorAnvesh">
+            <div class="news-card-one">
+                <img src="${imageHi}" class="news-img-one" alt="No Image"
+                onerror="this.onerror=null; this.src='image.jpg'; this.classList.add('fallback');"/>
+              <div class="news-frame-one">
+                <a href="${urlE1}" target="_blank" class="news-titleE1 news-para-55">${trimmedTitle}</a>
+              <p class="news-para11">${description}</p>
+              <div class="buttonE1">
+              <a href="${urlE1}" target="_blank">
+              <button class = "b1">Read more</button>
+              </a>
+              </div>
+              </div>
+              </div>
+            </div>`
+          ;
+        });
+
+        if (isNewSearch) {
+          resultsContainer.innerHTML = html;
+        } else {
+          resultsContainer.insertAdjacentHTML('beforeend', html);
+        }
+
+        if (!showButton) {
+          console.log("Hii")
+          spinnerE1.classList.add("d-none"); 
+
+          let assumeShow = document.createElement('div');
+          assumeShow.classList.add("assume-show");
+
+          showButton = document.createElement('button');
+          showButton.textContent = "View More";
+          showButton.classList.add("showE11");
+          showButton.style.display = "block";
+          assumeShow.append(showButton);
+          imageSectionE2.style.display="block"
+          console.log(imageSectionE2,"ANoop")
+          imageSectionE2.append(assumeShow);
+
+          document.body.appendChild(imageSectionE2);
+
+          showButton.addEventListener("click", () => {
+            loadMore();
+          });
+        }
+      } else {
+        showPopup("No Result found on news try to enter again !");
+        // resultsContainer.textContent = "";
+        if (showButton) showButton.style.display = 'block';
+      }
+    })
+    .catch(err => {
+      console.error("Error:", err);
+      resultsContainer.innerHTML = `
+      <div class="api-size">
+      <div class="api-limit-card">
+  <h2>⚠️ API Limit Reached</h2>
+  <p>Sorry, only <strong>100 API requests</strong> are allowed per day.</p>
+  <p>Please try again after <strong>24 hours</strong>.</p>
+</div>
+</div>`
+    })
+    .finally(() => {
+      spinnerE1.classList.add("d-none"); 
+    });
 }  
 
-   
 
 function searv(event){
   console.log(event)
@@ -341,6 +467,7 @@ function searv(event){
 
     imageSection.style.display="none"
     imageSectionE2.style.display="none"
+    
     most = man.value.trim()
     console.log(most)
     spinnerE1.classList.toggle("d-none")
@@ -361,13 +488,23 @@ function searv(event){
       method: "GET"
     }
 
- 
+ fetch(url, options)
+    .then(response => response.json())
+    .then(displaySearchResults)
+    // passes the data to funtion
+    .catch(error => {
+        console.error("Fetch error:", error);
+        resultsContainer.textContent = "Failed to fetch results. Please try again later.";
+    })
+    .finally(() => {
+        spinnerE1.classList.add("d-none");  // Hide spinner after request completes (success or error)
+    });
 
   function displaySearchResults(jsonData) {
-    console.log(jsonData);
+    // console.log(jsonData);
 
     let { search_results } = jsonData; 
-    console.log(search_results);
+    // console.log(search_results);
 
     resultsContainer.textContent = "";
     
@@ -377,35 +514,35 @@ function searv(event){
     }
 
     search_results.forEach((user) => {
-        console.log(user.title);
-
+        // console.log(user.title);
+        const {title,link,description} = user
         let mainOne = document.createElement('div');
         let main = document.createElement('div');
         main.classList.add("color-less");
 
         let titleE1 = document.createElement('a');
         titleE1.classList.add("title");
-        titleE1.href = user.link;
-        titleE1.textContent = user.title;
+        titleE1.href =link;
+        titleE1.textContent = title;
         titleE1.target = "_blank";
 
         let breakE1 = document.createElement('br');
 
         let linkE1 = document.createElement('a');
         linkE1.classList.add("link");
-        linkE1.href = user.link;
-        linkE1.textContent = user.link;
+        linkE1.href = link;
+        linkE1.textContent = link;
         linkE1.target = "_blank";
 
         let descriptionE1 = document.createElement('p');
         descriptionE1.classList.add("description");
-        descriptionE1.textContent = user.description;
+        descriptionE1.textContent = description;
 
         main.append(titleE1, linkE1, descriptionE1);
         mainOne.append(main);
         
-        console.log(user.link);
-        console.log(user.description);
+        // console.log(user.link);
+        // console.log(user.description);
         
         resultsContainer.append(mainOne);
     });
@@ -414,16 +551,7 @@ function searv(event){
 }
 
 
-fetch(url, options)
-    .then(response => response.json())
-    .then(displaySearchResults)
-    .catch(error => {
-        console.error("Fetch error:", error);
-        resultsContainer.textContent = "Failed to fetch results. Please try again later.";
-    })
-    .finally(() => {
-        spinnerE1.classList.add("d-none");  // Hide spinner after request completes (success or error)
-    });
+
 
 
     }
@@ -431,9 +559,9 @@ fetch(url, options)
     searchInput.addEventListener("keydown",searv)
 
 
-    let imageSection = document.getElementById('imageSection')
-    let imageSectionE1 = document.getElementById('imageSectionE1')
-    let imageSectionE2 = document.getElementById('imageSectionE2')
+    // let imageSection = document.getElementById('imageSection')
+    // let imageSectionE1 = document.getElementById('imageSectionE1')
+    // let imageSectionE2 = document.getElementById('imageSectionE2')
     let allManCount = 0;
     let clickCount = 0;
     let videoCount = 0;
@@ -445,6 +573,7 @@ fetch(url, options)
         
         
         if (id === 'oneMan') {
+          console.log("mama")
           allManCount++;
           resultsContainer.classList.add("one")
           resultsContainer.classList.remove("myImage")
@@ -456,6 +585,7 @@ fetch(url, options)
 
           let focus = document.getElementById('coolAnoop')
           focus.innerHTML=""
+          
           // spinnerE1.classList.toggle("d-none")
           spinnerE1.classList.remove("d-none");
             spinnerE1.style.display="block"
@@ -463,9 +593,11 @@ fetch(url, options)
   
           console.log("click")
           userValue = searchInput.value;
-          if(allManCount===1){
-          
+          if(!userValue){
+            searchVideoE1(true)
+            console.log("55")
           }
+          else{
           if(userValue===""){
             showPopup("Start typing and hit Enter to search Wikipedia.")
             resultsContainer.textContent=""
@@ -474,7 +606,8 @@ fetch(url, options)
           else{
             resultsContainer.innerHTML="" 
             imageSection.style.display="none"
-
+            // for button ViewMore
+            console.log(imageSection,"One 1")
             let url = "https://apis.ccbp.in/wiki-search?search=" + searchInput.value;
             let options = {
               method: "GET"
@@ -486,11 +619,11 @@ fetch(url, options)
             })
             .then(function(jsonData){
 
-            console.log(jsonData)
+            // console.log(jsonData)
             
             let { search_results } = jsonData; // this is used for
  
-              console.log(search_results)
+              // console.log(search_results)
         
               resultsContainer.textContent="";
               if(!search_results || search_results.length ===0) {
@@ -503,8 +636,8 @@ fetch(url, options)
             
         
             search_results.forEach((user) =>{
-            console.log(user.title)
-        
+            // console.log(user.title)
+              const {title,description,link} = user
             let mainOne = document.createElement('div')
         
         
@@ -514,25 +647,25 @@ fetch(url, options)
         
             let titleE1 = document.createElement('a')
             titleE1.classList.add("title")
-            titleE1.href=user.link
-            titleE1.textContent=user.title;
+            titleE1.href=link
+            titleE1.textContent=title;
             titleE1.target="_blank"
         
             let linkE1 = document.createElement('a')
             linkE1.classList.add("link")
-            linkE1.href=user.link
-            linkE1.textContent=user.link
+            linkE1.href=link
+            linkE1.textContent=link
             linkE1.target="_blank"
         
             let descriptionE1 = document.createElement('p')
             descriptionE1.classList.add("description")
-            descriptionE1.textContent=user.description
+            descriptionE1.textContent=description
         
             main.append(titleE1,linkE1,descriptionE1)
             mainOne.append(main)
-            console.log(user.link)
+            console.log(link)
         
-            console.log(user.description)
+            // console.log(description)
             resultsContainer.append(mainOne);
 
             spinnerE1.classList.add("d-none")
@@ -549,7 +682,7 @@ fetch(url, options)
           }
       )} 
         }
-
+      }
         else if (id === 'twoMan') {
           clickCount++;
           resultsContainer.classList.remove("one");
@@ -563,34 +696,16 @@ fetch(url, options)
           let focus = document.getElementById('coolAnoop')
           focus.innerHTML=""
           resultsContainer.innerHTML="";
-            
-
+          
+          // let gallery = document.createElement('div')
           const searchInputMan = document.getElementById('searchMan');
           
           async function searchImage(isNewSearch = false) {
             
             const userValue = searchInputMan.value.trim();
             let accessKey = "49671633-184f23eef7e7e0b0d111e40c0";
-        
-          // if(clickCount===1){
-          //   if (userValue === "") {
-          //     showPopup("Start typing and hit enter to search for images!");
-          //     resultsContainer.textContent = "";
-          //     oneTime = true;
-          //     console.log(clickCount,"hi")
-          //     return;
-              
             
-          // }
-          
-          //   else{
-          //     fetchGallery(true)
-          //     console.log("hii",clockCount)
-          //   }
-          // }
-
-          if(clickCount===1){
-            fetchGallery(true)
+          if(!userValue){
               console.log("hii",clickCount)
           }
           else{
@@ -601,115 +716,126 @@ fetch(url, options)
               console.log(clickCount,"hi")
               let meAnoop = document.getElementById('meAnoop')
               meAnoop.style.display="none";
+              // userd to clear ViewButton
               return; 
             }
           }
 
-           
+     // Initialize values
+// let currentPage = 1;
+// let viewMoreButton = null; 
+// if an error kindly arrange this assigned values after fetchGallery()      // 
+          
+//             async function fetchGallery(isInitialLoad) {
+//               console.log("trigger")
+//   const searchTerms = ["architecture", "temples", "space", "wildlife", "sunset"];
+//   const keyword = searchTerms[Math.floor(Math.random() * searchTerms.length)];
+//   var E1
+//   if (isInitialLoad) {
+//     E1 = 1;
+//     gallery.innerHTML = "";
+//     if (viewMoreButton) {
+//       console.log("225")
+//       viewMoreButton.remove();
+//       viewMoreButton = null;
+//     }
+//   }
 
-            async function fetchGallery(isInitialLoad) {
-  const searchTerms = ["architecture", "temples", "space", "wildlife", "sunset"];
-  const keyword = searchTerms[Math.floor(Math.random() * searchTerms.length)];
+//   spinnerE1.classList.remove("d-none");
+//   spinnerE1.style.display="block"
 
-  if (isInitialLoad) {
-    currentPage = 1;
-    galleryContainer.innerHTML = "";
-    if (viewMoreButton) {
-      viewMoreButton.remove();
-      viewMoreButton = null;
-    }
-  }
+//   const apiUrl = `https://pixabay.com/api/?page=${E1}&key=${accessKey}&q=${encodeURIComponent(keyword)}&image_type=photo&safesearch=true`;
 
-  loadingSpinner.classList.remove("d-none");
+//   try {
+//     const response = await fetch(apiUrl);
+//     const data = await response.json();
+//     const imageList = data.hits;
 
-  const apiUrl = `https://pixabay.com/api/?page=${currentPage}&key=${accessKey}&q=${encodeURIComponent(keyword)}&image_type=photo&safesearch=true`;
+//     if (imageList.length === 0 && E1 === 1) {
+//       showAlert("No images found. Try a different topic.");
+//       gallery.textContent = "";
+//       return;
+//     }
 
-  try {
-    const response = await fetch(apiUrl);
-    const data = await response.json();
-    const imageList = data.hits;
+//     imageList.forEach(item => {
+//       console.log("Onclick")
+//       // const wikiKeyword = item.tags || "architecture";
 
-    if (imageList.length === 0 && currentPage === 1) {
-      showAlert("No images found. Try a different topic.");
-      galleryContainer.textContent = "";
-      return;
-    }
+//       const wrapper = document.createElement('div');
+//       wrapper.classList.add("image-wrapper");
 
-    imageList.forEach(item => {
-      const wikiKeyword = item.tags || "architecture";
+//       const imageBox = document.createElement('div');
+//       imageBox.classList.add("image-box");
 
-      const wrapper = document.createElement('div');
-      wrapper.classList.add("image-wrapper");
+//       const imgElement = document.createElement('img');
+//       imgElement.classList.add("gallery-image");
+//       imgElement.src = item.webformatURL;
 
-      const imageBox = document.createElement('div');
-      imageBox.classList.add("image-box");
+//       imgElement.addEventListener("click", () => {
+//         const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(wikiKeyword)}`;
+//         window.open(wikiLink, '_blank');
+//       });
 
-      const imgElement = document.createElement('img');
-      imgElement.classList.add("gallery-image");
-      imgElement.src = item.webformatURL;
+//       imageBox.appendChild(imgElement);
+//       wrapper.append(imageBox);
+//       gallery.appendChild(wrapper);
+//     });
 
-      imgElement.addEventListener("click", () => {
-        const wikiLink = `https://en.wikipedia.org/wiki/${encodeURIComponent(wikiKeyword)}`;
-        window.open(wikiLink, '_blank');
-      });
+//     if (viewMoreButton) {
+//       const btnContainer = document.createElement('div');
+//       btnContainer.classList.add("btn-wrapper");
 
-      imageBox.appendChild(imgElement);
-      wrapper.append(imageBox);
-      galleryContainer.appendChild(wrapper);
-    });
+//       viewMoreButton = document.createElement('button');
+//       viewMoreButton.textContent = "View More";
+//       viewMoreButton.classList.add("load-more-btn");
 
-    if (!viewMoreButton) {
-      const btnContainer = document.createElement('div');
-      btnContainer.classList.add("btn-wrapper");
+//       btnContainer.append(viewMoreButton);
+//       imageSection.append(btnContainer);
+//       document.body.appendChild(imageSection);
 
-      viewMoreButton = document.createElement('button');
-      viewMoreButton.textContent = "View More";
-      viewMoreButton.classList.add("load-more-btn");
+//       viewMoreButton.addEventListener("click", () => {
+//         currentPage++;
+//         fetchGallery(false);
+//       });
+//     }
 
-      btnContainer.append(viewMoreButton);
-      imageSection.append(btnContainer);
-      document.body.appendChild(imageSection);
+//   } catch (err) {
+//     console.error("Image fetch failed:", err);
+//     showAlert("Something went wrong. Please try again.");
+//   } finally {
+//     spinnerE1.classList.add("d-none");
+//   }
+// }
 
-      viewMoreButton.addEventListener("click", () => {
-        currentPage++;
-        fetchGallery(false);
-      });
-    }
 
-  } catch (err) {
-    console.error("Image fetch failed:", err);
-    showAlert("Something went wrong. Please try again.");
-  } finally {
-    loadingSpinner.classList.add("d-none");
-  }
-}
-
-// Initialize values
-let currentPage = 1;
-let viewMoreButton = null;
 
 // Call once to load on page load
-fetchGallery(true);
+// fetchGallery(true);
 
         
             if (isNewSearch) {
+              console.log("false")
               page = 1;
               resultsContainer.innerHTML = "";
               if (showMore) {
+                console.log("hello")
                 showMore.remove();
                 showMore = null;
               }
             }
             
             spinnerE1.classList.remove("d-none");
-        
+            spinnerE1.style.display="block"
+            
             const url = `https://pixabay.com/api/?page=${page}&key=${accessKey}&q=${encodeURIComponent(userValue)}&image_type=photo&safesearch=true`;
-        
+            console.log(userValue,"mama")
+            // Pixabay API treats an empty q (query) as a wildcard search and returns the latest popular or default set of images (usually 20, depending on the per_page parameter).
+            // If userValue === "", you still get 20 default images because Pixabay does not block the request—it just returns general images.
             try {
               const response = await fetch(url);
               const data = await response.json();
               const results = data.hits;
-        
+              console.log(results)
               if (results.length === 0 && page === 1) {
                 showPopup("No images found. Please try a different search item.");
                 resultsContainer.textContent = "";
@@ -719,7 +845,7 @@ fetchGallery(true);
               }
         
               results.forEach(result => {
-                
+                console.log(result.tags)
                 const searchKeyword = result.tags || "India monument";
         
                 const twoDivContainer = document.createElement('div');
@@ -744,6 +870,7 @@ fetchGallery(true);
               });
         
               if (!showMore) {
+                console.log("here")
                 const assumeShow = document.createElement('div');
                 assumeShow.classList.add("assume-show");
         
@@ -786,7 +913,7 @@ fetchGallery(true);
           imageSectionE1.style.display = "block";
           imageSectionE2.style.display = "none";
           imageSection.style.display = "none";
-          imageSectionE1.innerHTML = "";
+          imageSectionE1.textContent = "";
         
           let focus = document.getElementById('coolAnoop');
           focus.innerHTML = "";
@@ -806,15 +933,17 @@ fetchGallery(true);
             //   return;
             // }
 
-            if(videoCount===1){
+            if(!query){
               // showVideo()
               console.log("cl")
               console.log(videoCount)
-              searchVideo("Cricket")
+                const topics = ["Movies","Indiannews","sports","Indianpolitics","Hindu","World","Business","Science","Health","Indis","Entertainment","Technology"];
+                const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+              searchVideo(randomTopic)
             }
             else {
               if(query===""){
-                showPopup("Start typing and hit Enter to search Wikipedia.");
+                showPopup("Start typing and hit Enter to search Videos.");
               resultsContainer.innerHTML = "";
               spinnerE1.classList.add("d-none");
               return;
@@ -840,6 +969,7 @@ fetchGallery(true);
           }
         
           function searchVideo(query, isNewSearch = false) {
+            console.log(query,"Yt")
             return new Promise((resolve, reject) => {
               const url = new URL('https://www.googleapis.com/youtube/v3/search');
               url.searchParams.set('part', 'snippet');
@@ -873,6 +1003,7 @@ fetchGallery(true);
                       const videoId = video.id.videoId;
                       const titleE1 = video.snippet.title.split("#")[0].trim();
                       const date = new Date(video.snippet.publishedAt).toLocaleDateString('en-CA', {
+                        // Canadian English locale (en-CA)
                         year: 'numeric',
                         month: 'long',
                         day: 'numeric'
@@ -923,7 +1054,7 @@ fetchGallery(true);
                       showMore.addEventListener("click", loadMore);
                     }
                   } else {
-                    resultsContainer.innerHTML = "";
+                    // resultsContainer.innerHTML = "";
                     if (showMore) showMore.style.display = 'none';
                   }
         
@@ -957,15 +1088,17 @@ fetchGallery(true);
           imageSectionE2.innerHTML = "";
         
           const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
-          let currentQuery = '';
+          let currentQuery ;
           let page = 1;
           let showMore = null;
         
           function startSearch() {
             const query = searchInput.value.trim();
 
-            if(newsCount===1){
-              searchNews("India")
+            if(!query){
+              const topics = ["Movies","Hindu","World","Business","Science","Health","Entertainment","Technology"];
+                const randomTopic = topics[Math.floor(Math.random() * topics.length)];
+              searchNews(randomTopic)
             }
             else{
             if (query === "") {
@@ -978,15 +1111,17 @@ fetchGallery(true);
         
             currentQuery = query;
             page = 1;
-            searchNews(query, true);
+            console.log(currentQuery,page)
+            searchNews( true);
           }
         
         //   function loadMore() {
         //     page++;
         //     searchNews(currentQuery, false);
         //   }
-        
+     
           function searchNews(query, isNewSearch = false) {
+            console.log(query,"ll")
             // here changed url and set up for the button on the Nes APi as per requirement of view more button
             const url = new URL(`https://gnews.io/api/v4/search`);
             // const url = new URL(`https://newsapi.org/v2/everything?q=${query}&from=2025-03-13&sortBy=publishedAt&apiKey=2af44fa03ff24e23b902485dd7e69aac`)
@@ -994,16 +1129,19 @@ fetchGallery(true);
             url.searchParams.set('token', apiKey);
             url.searchParams.set('lang', 'en');
             // url.searchParams.set('page', page.toString());
+            console.log(query)
         
             spinnerE1.classList.remove("d-none");
-        
+            console.log(url)
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
+                console.log(data)
                 const results = data.articles;
-                console.log(results);
+                // console.log(results);
         
                 if (isNewSearch) {
+                  
                   resultsContainer.innerHTML = "";
                   if (showMore) {
                     showMore.remove();
@@ -1011,7 +1149,7 @@ fetchGallery(true);
                   }
                 }
         
-                if (results && results.length > 1) {
+                if (results && results.length >= 1) {
                   let html = '';
                   results.forEach(article => {
                     const title = article.title;
@@ -1072,20 +1210,22 @@ fetchGallery(true);
                 spinnerE1.classList.add("d-none");
               });
           }
+      
         
           startSearch();
         }        
     });
   });
-  // const headLegend = document.getElementById(headLegend)
+ 
+
 
 window.addEventListener('scroll', function() {
   const allMix = document.querySelector('.all-mix');
   const headLegend = document.getElementById('headLegend')
-  const searchClass = document.querySelector('.search-class');
+  const searchClass = document.querySelector('.search-class'); // its for mainDiv elelemt created in top
   const stickyTop = allMix.getBoundingClientRect().top;
-  const searchinputclass = document.querySelector('.search-input-class') 
-  if (stickyTop <= 0) {
+  const searchinputclass = document.querySelector('.search-input-class') // class search
+  if (stickyTop < 10) {
      allMix.style.boxShadow = '0 4px 12px rgba(0, 0, 0, 0.15)';
     searchClass.style.paddingTop="5px"
     searchinputclass.style.borderRadius="50px"
@@ -1101,7 +1241,8 @@ window.addEventListener('scroll', function() {
     </div>`
     
     
-  } else{
+  } 
+  else{
     searchClass.style.marginTop = '0px';
     allMix.style.boxShadow = 'none';
     searchinputclass.style.borderRadius="5px"
@@ -1117,6 +1258,7 @@ const categoryMap = {
 
 headLegend.addEventListener("click", function (e) {
   const clickedId = e.target.id;
+  console.log(clickedId)
   // setActive(e.target.id)
   if (categoryMap[clickedId]) {
     // 1. Highlight clicked button and remove highlight from others
@@ -1184,8 +1326,8 @@ function fetchCategoryNews(apiKey, category, lang) {
           `;
           
         });
-
-        resultsContainer.insertAdjacentHTML('beforeend', html);
+        resultsContainer.innerHTML=html
+        // resultsContainer.insertAdjacentHTML('beforeend', html);
       } else {
         showPopup(`No ${category} news found. Try again later.`);
       }
