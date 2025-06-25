@@ -1087,18 +1087,18 @@ function searv(event){
           focus.innerHTML = "";
           imageSectionE2.innerHTML = "";
         
-          const apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
-          let currentQuery ;
+          let apiKey = "6cc312c3402b069ac9089bf8b859ad8e";
+          // let currentQuery ;
           let page = 1;
           let showMore = null;
         
           function startSearch() {
-            const query = searchInput.value.trim();
+            let query = searchInput.value.trim();
 
             if(!query){
-              const topics = ["Movies","Hindu","World","Business","Science","Health","Entertainment","Technology"];
+              const topics = ["Movies","Hindu","World","Business","Science","Health","Entertainment","Technology","BJP"];
                 const randomTopic = topics[Math.floor(Math.random() * topics.length)];
-              searchNews(randomTopic)
+                searchNews(randomTopic,true)
             }
             else{
             if (query === "") {
@@ -1109,26 +1109,25 @@ function searv(event){
             }
           }
         
-            currentQuery = query;
+            // currentQuery = query;
             page = 1;
-            console.log(currentQuery,page)
-            searchNews( true);
+            console.log(query,page)
+            searchNews( query,true);
           }
-        
-        //   function loadMore() {
-        //     page++;
-        //     searchNews(currentQuery, false);
-        //   }
+          
      
           function searchNews(query, isNewSearch = false) {
-            console.log(query,"ll")
+            console.log("iii")
+           console.log("Query received:", query, "| Type:", typeof query);
+
+
             // here changed url and set up for the button on the Nes APi as per requirement of view more button
-            const url = new URL(`https://gnews.io/api/v4/search`);
             // const url = new URL(`https://newsapi.org/v2/everything?q=${query}&from=2025-03-13&sortBy=publishedAt&apiKey=2af44fa03ff24e23b902485dd7e69aac`)
+            const url = new URL(`https://gnews.io/api/v4/search`);
             url.searchParams.set('q', query);
             url.searchParams.set('token', apiKey);
             url.searchParams.set('lang', 'en');
-            // url.searchParams.set('page', page.toString());
+            url.searchParams.set('page', page.toString());
             console.log(query)
         
             spinnerE1.classList.remove("d-none");
@@ -1136,7 +1135,7 @@ function searv(event){
             fetch(url.toString())
               .then(res => res.json())
               .then(data => {
-                console.log(data)
+                console.log(data,"High")
                 const results = data.articles;
                 // console.log(results);
         
